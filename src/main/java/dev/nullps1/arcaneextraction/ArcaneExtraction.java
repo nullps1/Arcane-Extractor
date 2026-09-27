@@ -6,8 +6,10 @@ import dev.nullps1.arcaneextraction.registry.ModBlocks;
 import dev.nullps1.arcaneextraction.registry.ModCapabilities;
 import dev.nullps1.arcaneextraction.registry.ModItems;
 import dev.nullps1.arcaneextraction.registry.ModMenus;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import org.slf4j.Logger;
 
 @Mod(ArcaneExtraction.MOD_ID)
@@ -21,7 +23,14 @@ public final class ArcaneExtraction {
         ModBlockEntities.register(modEventBus);
         ModMenus.register(modEventBus);
         modEventBus.addListener(ModCapabilities::register);
+        modEventBus.addListener(this::addCreativeTabContents);
 
         LOGGER.info("Arcane Extraction initializing");
+    }
+
+    private void addCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(ModItems.ARCANE_EXTRACTOR.get());
+        }
     }
 }
