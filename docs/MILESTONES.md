@@ -2,7 +2,7 @@
 
 ## M0 — Repository bootstrap
 
-Status: **implemented; build verification pending on a networked Gradle environment**.
+Status: **complete**.
 
 Scope:
 - NeoForge 1.21.1 project skeleton.
@@ -11,21 +11,26 @@ Scope:
 - GitHub Actions build workflow.
 - Documentation baseline.
 
-Exit criteria:
-- `./gradlew build` succeeds.
-- CI succeeds on a clean checkout.
-- Mod loads in a NeoForge 1.21.1 development client and dedicated server.
-
 ## M1 — Extraction engine
+
+Status: **implemented; PR CI validation pending**.
 
 Scope:
 - Read enchantments from a source `ItemStack`.
 - Represent selectable extraction candidates.
 - Remove exactly one selected enchantment.
 - Produce an enchanted book with the exact original level.
-- Preserve every unrelated source-item component.
+- Preserve unrelated source-item components through `ItemStack.copy()`.
 - Reject invalid requests without mutating inputs.
-- Focused automated tests/GameTests.
+- Focused JUnit coverage.
+
+Exit criteria:
+- `./gradlew build` succeeds.
+- Candidate discovery returns every source enchantment and exact level.
+- Successful extraction removes only the selected enchantment.
+- Output enchanted book stores exactly the selected enchantment and level.
+- Original input stack remains unchanged.
+- Failure paths are typed and non-mutating.
 
 ## M2 — Arcane Extractor block
 

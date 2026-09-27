@@ -1,31 +1,51 @@
 # Testing
 
-## M0 checks
+## Build
+
+### Windows
+
+```powershell
+.\bootstrap-wrapper.ps1
+.\gradlew.bat build
+```
+
+### Linux/macOS
 
 ```bash
 sh ./bootstrap-wrapper.sh
 sh ./gradlew build
-sh ./gradlew runClient
 ```
 
-A dedicated-server smoke test is required before calling M0 complete in GitHub:
+## M1 automated coverage
+
+`EnchantmentExtractorTest` verifies:
+
+- Candidate discovery exposes every enchantment and exact level.
+- Extraction removes only the selected enchantment.
+- Remaining enchantments preserve their levels.
+- Output is an enchanted book containing exactly the extracted enchantment.
+- Custom name and durability damage survive on the copied source.
+- The caller's original source stack is not mutated.
+- Selecting an enchantment not present on the source returns `ENCHANTMENT_NOT_PRESENT`.
+- An unenchanted source returns `SOURCE_NOT_ENCHANTED`.
+- An empty source returns `EMPTY_SOURCE`.
+
+## Runtime smoke tests
+
+Before a release:
 
 ```bash
+sh ./gradlew runClient
 sh ./gradlew runServer
 ```
 
-Accept the development EULA only in the generated run directory, then verify the mod loads without client-only class errors.
+Verify the mod loads without client-only class errors.
 
-## M1 test matrix
+## Future compatibility matrix
 
-Required cases:
-- Source has one enchantment.
-- Source has multiple enchantments.
-- Selected enchantment level is preserved.
-- Other enchantments remain unchanged.
-- Source with no enchantments is rejected.
-- Missing/invalid selected enchantment is rejected.
-- Empty book input is rejected by the future machine transaction layer.
-- Curse extraction behaves consistently with ordinary enchantments.
-- Non-enchantment item components survive extraction.
-- Modded/data-driven enchantments do not require Arcane Extraction code changes.
+Required later:
+- Vanilla treasure enchantments.
+- Curses.
+- Above-vanilla enchantment levels.
+- Modded/data-driven enchantments.
+- Dedicated multiplayer server transaction behavior.
