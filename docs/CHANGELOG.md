@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### M7 — 2026-09-27
+
+#### Changed
+- Replaced the placeholder cube with an original standing obsidian workstation: stone plinth, side supports, input shelf, engraved upright housing, and an amethyst focus.
+- Added five original 16x16 block textures and the inherited 3D item model.
+- Added horizontal placement facing, structure rotation/mirroring, and model-matched outline/collision shapes. Existing saved machines without a facing default north.
+- Added a 256x256 GUI atlas with a 176x233 visible panel, source/book labels, output shelf, enchantment ledger, and all player inventory/hotbar slot frames.
+- Added themed action buttons with active, disabled, hover, and focus states. Selected rows have a bright edge as well as a color highlight.
+- Constrained long enchantment names to the list panel, retained curse styling, exposed full names on hover, and wrapped the empty-state prompt.
+- Added model/texture/shape regression tests and a reproducible original-art generator.
+- Refreshed the README and milestone status to reflect implemented gameplay and the owner's reported M6 acceptance.
+
+#### Compatibility
+- M6 slot coordinates/order, network payloads, registry IDs, save inventory, extraction rules, automation, recipe, loot, and success feedback are unchanged.
+- No external art packs, renderer library, emissive shader, or runtime asset generator is required.
+- See [M7_VISUALS.md](M7_VISUALS.md) for validation evidence and remaining live release gates. The snapshot version remains unchanged pending final release acceptance.
+
 ### M6 — 2026-09-27
 
 #### Changed

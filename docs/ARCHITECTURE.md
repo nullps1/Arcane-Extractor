@@ -32,3 +32,11 @@ NeoForge deferred registrations.
 5. Unrelated item data components are preserved.
 6. The server is authoritative.
 7. Compatibility should be registry/data driven, not based on a hardcoded list of mod IDs or enchantments.
+
+## M7 visual boundary
+
+`ArcaneExtractorBlock` owns horizontal facing and the static collision/outline shapes. The JSON model and original PNGs use ordinary baked block rendering. `noOcclusion` prevents the open stand from hiding neighboring faces. The registered block/block-entity/item/menu IDs and inventory NBT are unchanged; a pre-M7 state with no facing uses the north default.
+
+`ArcaneExtractorScreen` reads the same M6 menu and sends the same registry-ID/all payloads. Its 176x233 background preserves every slot position. `ArcaneButton` changes painting only and inherits vanilla button interaction/narration. All rendering imports remain in the client package.
+
+The successful extraction repair-cost reset is the intentional exception to unrelated-component preservation in invariant 5; failures preserve it.

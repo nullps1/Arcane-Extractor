@@ -117,7 +117,13 @@ The exact registry-ID network selection path is additionally covered by live cli
 11. Verify hopper/pipe extraction works from every buffered output.
 12. Repeat the two-player stale-selection/concurrency checks.
 
-## Pre-v1 release gate
+## M7 visual regression coverage
+
+`ArcaneExtractorVisualTest` verifies all four blockstate/model rotations against outline and collision geometry, structure rotation/mirroring, the north default, non-occluding block state, item-model inheritance, local PNG references/dimensions, and GUI atlas opacity/dimensions. The existing M1–M6 tests run unchanged.
+
+See [M7_VISUALS.md](M7_VISUALS.md) for the current validation record and [PRE_RELEASE_TEST_PLAN.md](PRE_RELEASE_TEST_PLAN.md#gate-j--m7-visual-acceptance) for final in-pack acceptance. Original assets can be regenerated with `python tools/generate_visual_assets.py` (Python 3 + Pillow); a normal Gradle build uses the checked-in PNGs and does not need Python.
+
+## Final pre-v1 release gate
 
 Execute every check in [PRE_RELEASE_TEST_PLAN.md](PRE_RELEASE_TEST_PLAN.md) against the actual NeoForge 1.21.1 client/server pack before tagging v1.0.0.
 

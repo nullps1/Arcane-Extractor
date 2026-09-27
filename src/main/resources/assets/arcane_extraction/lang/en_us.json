@@ -5,5 +5,9 @@
   "screen.arcane_extraction.extract": "Extract",
   "screen.arcane_extraction.extract_all": "Extract All",
   "screen.arcane_extraction.no_enchantments": "Insert enchanted gear",
-  "screen.arcane_extraction.page": "Page %s/%s"
+  "screen.arcane_extraction.page": "Page %s/%s",
+  "screen.arcane_extraction.source": "Source",
+  "screen.arcane_extraction.books": "Books",
+  "screen.arcane_extraction.enchantments": "Enchantments",
+  "screen.arcane_extraction.output": "Output"
 }

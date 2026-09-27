@@ -1,7 +1,20 @@
 {
   "variants": {
-    "": {
-      "model": "arcane_extraction:block/arcane_extractor"
+    "facing=north": {
+      "model": "arcane_extraction:block/arcane_extractor",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "arcane_extraction:block/arcane_extractor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "arcane_extraction:block/arcane_extractor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "arcane_extraction:block/arcane_extractor",
+      "y": 270
     }
   }
 }
