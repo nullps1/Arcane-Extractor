@@ -113,8 +113,9 @@ The exact registry-ID network selection path is additionally covered by live cli
 7. Use **Extract All** with enough books and capacity; verify one separate enchanted book per enchantment.
 8. Repeat Extract All with fewer books than enchantments and confirm it stops cleanly.
 9. Confirm all six outputs persist across save/reload.
-10. Verify hopper/pipe extraction works from every buffered output.
-11. Repeat the two-player stale-selection/concurrency checks.
+10. Load a world containing a pre-M6 3-slot Arcane Extractor and confirm its source, book, and old output survive while the new buffer slots are added.
+11. Verify hopper/pipe extraction works from every buffered output.
+12. Repeat the two-player stale-selection/concurrency checks.
 
 ## Pre-v1 release gate
 
