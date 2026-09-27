@@ -26,7 +26,8 @@ Cases:
 - [ ] Curse of Binding on valid equipment;
 - [ ] Curse of Vanishing;
 - [ ] item with more than four enchantments;
-- [ ] heavily damaged named item.
+- [ ] heavily damaged named item;
+- [ ] item with a high anvil prior-work penalty: after one successful extraction, verify subsequent anvil costs return to a sane baseline rather than continuing the prior-work escalation.
 
 ## Gate C — modded and nonstandard enchantments
 
