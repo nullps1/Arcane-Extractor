@@ -1,39 +1,66 @@
 # M7 visual release
 
-## Design
+## Current release-candidate direction: M7.1 medieval magic retheme
 
-The approved standing workstation direction is implemented as a one-block obsidian apparatus with a low plinth, two metal/stone supports, an engraved upright housing, an amethyst lens, and a front input shelf. The model has 11 axis-aligned cuboids and four horizontal facings. It uses standard Minecraft baked rendering and a 3D item inherited from the block model.
+The original M7 implementation proved the directional custom-model and themed-GUI pipeline, but owner testing found its art direction too modern/industrial. M7.1 keeps the working M6/M7 integration and rethemes only presentation.
 
-All five 16x16 textures are original pixel art, generated deterministically by `tools/generate_visual_assets.py`: obsidian, trim, rune, amethyst, and deck. Purple highlights are painted; they do not require emissive shaders or introduce a new light source. The generator requires Python 3 and Pillow; normal builds use committed resources.
+### Block
 
-The GUI uses an original 256x256 atlas with a 176x233 visible region. Source/books, the 3x2 result shelf, enchantment ledger, and player inventory have distinct frames. Primary/secondary buttons retain vanilla interaction and narration. A selected row has a bright edge and purple fill; curse text retains Minecraft styling. Long names are clipped within the ledger and available in full on hover. The empty prompt wraps inside the ledger.
+The Arcane Extractor is now a medieval magical workstation inspired by the vanilla grindstone silhouette:
+
+- crying obsidian feet and upright supports;
+- dark oak structural crossbeam and front work shelf;
+- polished blackstone axle/hardware;
+- a thick, faceted amethyst extraction core;
+- a small amethyst rune inset on the work face;
+- open negative space so the block reads as a crafted workstation rather than a full machine cube.
+
+The model retains four horizontal facings and a matching directional outline/collision shape. It intentionally uses vanilla Minecraft material textures rather than custom industrial panels, which helps it sit naturally beside enchanting tables, grindstones, lecterns, and other medieval utility blocks.
+
+### GUI
+
+The M6 layout and coordinates are unchanged. Presentation is now rendered procedurally:
+
+- carved dark-oak outer frame;
+- warm parchment input/enchantment/inventory panels;
+- dark blackstone output altar;
+- amethyst corner inlays, dividers, transfer marks, and selection highlight;
+- carved-tablet Extract / Extract All / paging buttons;
+- vanilla text styling and full-name hover tooltips.
+
+The previous industrial GUI PNG remains in the repository as a historical unused asset but is no longer referenced by `ArcaneExtractorScreen`.
 
 ## Compatibility boundary
 
-- All eight machine and 36 player slot positions/indices are unchanged from M6.
-- No changes to menu routing, extraction transactions, registry-ID payloads, source/item components, automation, inventory serialization/migration, recipe, loot, sounds, or particles.
-- Existing block IDs resolve to the same block. Pre-M7 saved states lacking `facing` default north; no inventory migration is introduced.
-- Rotation/mirroring changes the model and shape only. Open geometry is non-occluding.
-- This is a snapshot visual release candidate. No tag, publication, or automatic merge is part of M7.
+M7.1 changes presentation only.
 
-## Validation record — 2026-09-27
+Unchanged from M6:
+- all eight machine slots and 36 player slots;
+- exact registry-ID selection payloads;
+- Extract and Extract All transactions;
+- six-slot output buffer;
+- source/book/output automation restrictions;
+- item components and repair-cost behavior;
+- block entity inventory serialization/migration;
+- recipe, loot, sounds, particles, and registry IDs.
 
-Environment: Minecraft 1.21.1, NeoForge 21.1.252, Java 21.0.12.1, Windows 11, NVIDIA GTX 1050; no external mods or resource packs.
+Block facing/shape support introduced in M7 remains intact.
 
-- `gradlew build` passed: **25 tests, zero failures**, including the unchanged M1–M6 regression suite and four M7 resource/shape/save-state tests.
-- M7 tests compare all four rendered model rotations with outline/collision shapes, verify rotation/mirroring, deserialize an old block palette without facing, round-trip current facings, and check texture references, PNG sizes, item inheritance, non-overlapping model elements, and GUI atlas opacity.
-- A temporary development-only harness created a fresh flat integrated-server world and captured the actual client at 1280x960, GUI scale 2. It opened the real menu, populated six enchantments/books, selected a row, paged, and clicked Extract then Extract All through the screen. The server confirmed all six output slots contained enchanted books and no input books remained. This is a visual/interaction smoke test, not a substitute for exact-ID and modpack/multiplayer acceptance.
-- The harness is excluded from the final mod JAR. Screenshots below are actual Minecraft renders, not concept mockups.
-- Dedicated-server smoke: `runServer` reached `Done` on a local-only development server, with no client-class linkage failures.
-- Final JAR inspection confirmed all six PNGs plus model/blockstates are packaged, with no development harness classes. Regenerating the assets produced byte-for-byte identical resources.
-- Local artifact: `build/libs/arcane_extraction-0.1.0-SNAPSHOT.jar`, SHA-256 `a3e822d3f2bdc7fce40d3235f9a4ef2655ed86735b5ff7a8cd39711c7f63d753`. This hash identifies the local Windows build, not a claim that a separate CI build has identical bytes.
+## M7.1 acceptance
 
-![Workstation in four directions](images/m7-workstation-four-facings.png)
-![Empty GUI](images/m7-gui-empty.png)
-![Selected enchantment with tooltip](images/m7-gui-selected.png)
-![Second page](images/m7-gui-page-two.png)
-![All six output slots after extraction](images/m7-gui-extract-all.png)
+Before tagging v1.0.0:
 
-## Remaining release acceptance
+1. Place the block from all four directions and confirm the shelf/crystal workstation reads correctly.
+2. Check crying obsidian, dark oak, blackstone, and amethyst textures in daylight and darkness.
+3. Verify outline/collision around the open model.
+4. Check inventory/hand/item-frame presentation.
+5. Open the GUI at the intended GUI scale and inspect wood/parchment/blackstone/amethyst readability.
+6. Verify all slots align, long names clip safely, tooltips show full names, curse styling remains readable, and selection/paging is clear.
+7. Exercise all button states.
+8. Repeat exact single extraction and Extract All once to prove M6 behavior survived the visual-only patch.
+9. Save/reload and verify facing and rendering.
+10. Record the final artifact hash and exact modpack/NeoForge versions.
 
-The owner reported M6 live acceptance on 2026-09-27; the exact pack/environment was not recorded here. Final visual approval, placement from every direction, item hand/ground/frame rendering, custom resource packs, other languages, real modded long names, two-player concurrency, automation, and a populated legacy-world upgrade must be accepted in the intended pack. Use [Gate J](PRE_RELEASE_TEST_PLAN.md#gate-j--m7-visual-acceptance) and record the final JAR hash and pack versions. Do not mark these manual gates passed based solely on automated tests or screenshots.
+## Historical M7 note
+
+The first M7 release candidate used custom obsidian/trim/rune/amethyst/deck PNGs and a 256x256 industrial GUI atlas. Its implementation and screenshots remain useful historical evidence that the custom model/menu path worked, but they no longer represent the intended v1.0.0 visual theme.
