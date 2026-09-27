@@ -15,6 +15,8 @@ The extractor does not maintain:
 
 If an enchantment exists in the source item's ordinary enchantment component, Arcane Extraction treats it as a candidate and preserves its stored integer level exactly.
 
+For single extraction, the client sends the selected enchantment's registry ID rather than a GUI row index. The server resolves that exact ID against the current source item before extraction. Candidate ordering is therefore presentation-only and cannot change which enchantment is removed.
+
 A successful extraction intentionally clears the source item's anvil prior-work penalty (`DataComponents.REPAIR_COST`). This prevents repeated extract/re-enchant cycles from inheriting an ever-growing anvil cost. Failed extraction attempts do not alter the repair cost.
 
 ## Automated M5 coverage
@@ -27,7 +29,7 @@ The test suite verifies:
 - external automation may insert valid source items and ordinary books;
 - external automation cannot insert directly into the output;
 - external automation cannot extract source items or input books;
-- external automation can extract completed output;
+- external automation can extract completed output from any of the six output-buffer slots;
 - simulated automation inserts do not mutate machine state.
 
 ## Runtime-only validation
