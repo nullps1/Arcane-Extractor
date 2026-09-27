@@ -2,6 +2,35 @@
 
 ## Unreleased
 
+### M3 — 2026-09-27
+
+#### Changed
+- Added and registered the Arcane Extractor menu type.
+- Right-clicking the Arcane Extractor now opens its server-backed menu.
+- Added standard source, book, output, player-inventory, and hotbar slots.
+- Added shift-click routing for enchanted source items and ordinary books.
+- Added a client-only Arcane Extractor screen with selectable enchantment rows.
+- Added paging so items with more than four enchantments remain fully selectable.
+- Added an Extract button that uses vanilla menu-button networking rather than a custom payload.
+- The server recomputes the candidate list from its authoritative source stack and rejects invalid candidate indices before invoking M2.
+- Added user-facing menu translations.
+
+#### Why
+M3 completes the first playable interaction loop while preserving the authority boundary established in M1/M2: the client chooses an index, but never supplies or mutates enchantment data directly.
+
+#### Validation
+- M2 is merged and CI-validated.
+- Menu and screen code are isolated by physical side; common classes do not import client-only Minecraft classes.
+- PR CI is the authoritative clean-environment compile/test validation for the 1.21.1 menu, screen, and opening APIs.
+
+#### Limitations
+- The screen currently uses a code-drawn background rather than final art.
+- No crafting recipe, XP cost, sound, particles, or custom block texture exists yet.
+- Extraction failures are safely rejected server-side but are not yet surfaced as detailed user-facing error messages.
+
+#### Next
+Implement M4: survival recipe, custom visual assets, sound/feedback, and first-pass balancing.
+
 ### M2 — 2026-09-27
 
 #### Changed
