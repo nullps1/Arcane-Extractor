@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "arcane_extraction:block/arcane_extractor"
+    }
+  }
+}
