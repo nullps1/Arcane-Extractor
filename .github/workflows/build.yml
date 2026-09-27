@@ -21,8 +21,9 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Bootstrap Gradle wrapper if needed
+      - name: Prepare Gradle wrapper
         run: |
+          chmod +x bootstrap-wrapper.sh gradlew
           if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
             ./bootstrap-wrapper.sh
           fi
