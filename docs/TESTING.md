@@ -81,7 +81,8 @@ Compatibility tests verify:
 
 - arbitrary/data-driven enchantment holders do not require a hardcoded ID;
 - above-normal enchantment levels are preserved exactly;
-- custom name, damage, and repair cost survive extraction;
+- custom name and damage survive extraction;
+- repair cost is intentionally reset on successful extraction while failed extraction preserves it;
 - automation can insert valid source items and ordinary books;
 - automation cannot insert directly into output;
 - automation cannot extract source items or input books;
