@@ -52,6 +52,7 @@ public final class EnchantmentExtractor {
         ItemEnchantments.Mutable remaining = new ItemEnchantments.Mutable(enchantments);
         remaining.removeIf(selected::equals);
         cleanedSource.set(DataComponents.ENCHANTMENTS, remaining.toImmutable());
+        cleanedSource.remove(DataComponents.REPAIR_COST);
 
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
         ItemEnchantments.Mutable stored = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
