@@ -3,15 +3,15 @@
 ## M0 checks
 
 ```bash
-./bootstrap-wrapper.sh
-./gradlew build
-./gradlew runClient
+sh ./bootstrap-wrapper.sh
+sh ./gradlew build
+sh ./gradlew runClient
 ```
 
 A dedicated-server smoke test is required before calling M0 complete in GitHub:
 
 ```bash
-./gradlew runServer
+sh ./gradlew runServer
 ```
 
 Accept the development EULA only in the generated run directory, then verify the mod loads without client-only class errors.
