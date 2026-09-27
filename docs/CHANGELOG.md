@@ -12,6 +12,7 @@
 - Added an **Extract All** action that repeatedly extracts from the current source until no candidates remain, input books run out, or the six-slot output buffer fills.
 - Updated automation exposure so external systems may pull from any output-buffer slot while input/source protection remains unchanged.
 - Updated the GUI to display a 3x2 output bank alongside separate Extract and Extract All controls.
+- Added legacy inventory migration so existing 3-slot Arcane Extractors expand to the new 8-slot layout without losing their old source, book, or output contents.
 - Added regression tests for repeated buffered extraction, full-buffer rejection, and extraction from any automation-visible output slot.
 
 #### Why
