@@ -1,7 +1,10 @@
 package dev.nullps1.arcaneextraction.client.screen;
 
+import dev.nullps1.arcaneextraction.blockentity.ArcaneExtractorInventory;
+import dev.nullps1.arcaneextraction.extraction.EnchantmentExtractor;
 import dev.nullps1.arcaneextraction.extraction.ExtractionCandidate;
 import dev.nullps1.arcaneextraction.menu.ArcaneExtractorMenu;
+import dev.nullps1.arcaneextraction.network.ExtractionRequestPayload;
 import java.util.List;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -9,17 +12,19 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneExtractorMenu> {
     private static final int LIST_X = 8;
-    private static final int LIST_Y = 58;
+    private static final int LIST_Y = 69;
     private static final int LIST_WIDTH = 90;
     private static final int ROW_HEIGHT = 12;
     private static final int ROWS_PER_PAGE = 4;
 
-    private int selectedIndex = -1;
+    private String selectedEnchantmentId;
     private int pageStart = 0;
     private Button extractButton;
+    private Button extractAllButton;
     private Button previousButton;
     private Button nextButton;
 
@@ -29,8 +34,8 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
             Component title) {
         super(menu, inventory, title);
         imageWidth = 176;
-        imageHeight = 210;
-        inventoryLabelY = 116;
+        imageHeight = 233;
+        inventoryLabelY = 139;
     }
 
     @Override
@@ -40,33 +45,48 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
         extractButton = addRenderableWidget(Button.builder(
                         Component.translatable("screen.arcane_extraction.extract"),
                         button -> requestExtraction())
-                .bounds(leftPos + 103, topPos + 58, 65, 20)
+                .bounds(leftPos + 103, topPos + 69, 65, 20)
+                .build());
+
+        extractAllButton = addRenderableWidget(Button.builder(
+                        Component.translatable("screen.arcane_extraction.extract_all"),
+                        button -> requestExtractAll())
+                .bounds(leftPos + 103, topPos + 93, 65, 20)
                 .build());
 
         previousButton = addRenderableWidget(Button.builder(
                         Component.literal("<"),
                         button -> changePage(-ROWS_PER_PAGE))
-                .bounds(leftPos + 103, topPos + 82, 30, 20)
+                .bounds(leftPos + 103, topPos + 117, 30, 20)
                 .build());
 
         nextButton = addRenderableWidget(Button.builder(
                         Component.literal(">"),
                         button -> changePage(ROWS_PER_PAGE))
-                .bounds(leftPos + 138, topPos + 82, 30, 20)
+                .bounds(leftPos + 138, topPos + 117, 30, 20)
                 .build());
 
         refreshControls();
     }
 
     private void requestExtraction() {
-        List<ExtractionCandidate> candidates = menu.candidates();
-        if (selectedIndex < 0 || selectedIndex >= candidates.size() || minecraft == null
-                || minecraft.gameMode == null) {
+        if (selectedEnchantmentId == null || selectedEnchantmentId.isBlank()) {
             return;
         }
 
-        minecraft.gameMode.handleInventoryButtonClick(menu.containerId, selectedIndex);
-        selectedIndex = -1;
+        PacketDistributor.sendToServer(
+                ExtractionRequestPayload.single(menu.containerId, selectedEnchantmentId));
+        selectedEnchantmentId = null;
+        refreshControls();
+    }
+
+    private void requestExtractAll() {
+        if (menu.candidates().isEmpty()) {
+            return;
+        }
+
+        PacketDistributor.sendToServer(ExtractionRequestPayload.all(menu.containerId));
+        selectedEnchantmentId = null;
         refreshControls();
     }
 
@@ -83,13 +103,20 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
         return ((size - 1) / ROWS_PER_PAGE) * ROWS_PER_PAGE;
     }
 
+    private String registryId(ExtractionCandidate candidate) {
+        return EnchantmentExtractor.registryId(candidate.enchantment()).orElse("");
+    }
+
     private void refreshControls() {
         List<ExtractionCandidate> candidates = menu.candidates();
         int size = candidates.size();
 
-        if (selectedIndex >= size) {
-            selectedIndex = -1;
+        if (selectedEnchantmentId != null
+                && candidates.stream().noneMatch(candidate ->
+                        selectedEnchantmentId.equals(registryId(candidate)))) {
+            selectedEnchantmentId = null;
         }
+
         if (pageStart >= size && size > 0) {
             pageStart = lastPageStart(size);
         }
@@ -98,7 +125,10 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
         }
 
         if (extractButton != null) {
-            extractButton.active = selectedIndex >= 0 && selectedIndex < size;
+            extractButton.active = selectedEnchantmentId != null;
+        }
+        if (extractAllButton != null) {
+            extractAllButton.active = !candidates.isEmpty();
         }
         if (previousButton != null) {
             previousButton.active = pageStart > 0;
@@ -111,14 +141,19 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         graphics.fill(leftPos, topPos, leftPos + imageWidth, topPos + imageHeight, 0xFF1C1724);
-        graphics.fill(leftPos + 7, topPos + 17, leftPos + 169, topPos + 108, 0xFF2C2238);
+        graphics.fill(leftPos + 7, topPos + 17, leftPos + 169, topPos + 137, 0xFF2C2238);
 
-        drawSlot(graphics, 25, 34);
-        drawSlot(graphics, 61, 34);
-        drawSlot(graphics, 133, 34);
+        drawSlot(graphics, 19, 34);
+        drawSlot(graphics, 55, 34);
 
-        graphics.drawCenteredString(font, "→", leftPos + 51, topPos + 39, 0xFFE0D7F0);
-        graphics.drawCenteredString(font, "→", leftPos + 113, topPos + 39, 0xFFE0D7F0);
+        for (int index = 0; index < ArcaneExtractorInventory.OUTPUT_COUNT; index++) {
+            int column = index % 3;
+            int row = index / 3;
+            drawSlot(graphics, 115 + column * 18, 25 + row * 18);
+        }
+
+        graphics.drawCenteredString(font, "→", leftPos + 45, topPos + 39, 0xFFE0D7F0);
+        graphics.drawCenteredString(font, "→", leftPos + 92, topPos + 39, 0xFFE0D7F0);
     }
 
     private void drawSlot(GuiGraphics graphics, int x, int y) {
@@ -137,12 +172,13 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
         for (int index = pageStart; index < end; index++) {
             int row = index - pageStart;
             int y = LIST_Y + row * ROW_HEIGHT;
+            ExtractionCandidate candidate = candidates.get(index);
+            String candidateId = registryId(candidate);
 
-            if (index == selectedIndex) {
+            if (!candidateId.isEmpty() && candidateId.equals(selectedEnchantmentId)) {
                 graphics.fill(LIST_X - 2, y - 1, LIST_X + LIST_WIDTH, y + 10, 0xFF604879);
             }
 
-            ExtractionCandidate candidate = candidates.get(index);
             Component name = Enchantment.getFullname(candidate.enchantment(), candidate.level());
             graphics.drawString(font, name, LIST_X, y, 0xFFE9E0F2, false);
         }
@@ -164,7 +200,7 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
                     font,
                     Component.translatable("screen.arcane_extraction.page", page, pages),
                     104,
-                    105,
+                    140,
                     0xFFAFA2BC,
                     false);
         }
@@ -184,7 +220,8 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
             int row = (relativeY - LIST_Y) / ROW_HEIGHT;
             int index = pageStart + row;
             if (index < candidates.size()) {
-                selectedIndex = index;
+                String candidateId = registryId(candidates.get(index));
+                selectedEnchantmentId = candidateId.isEmpty() ? null : candidateId;
                 refreshControls();
                 return true;
             }
