@@ -76,7 +76,7 @@ Exit criteria:
 
 ## M4 — Survival integration
 
-Status: **implemented; PR CI and runtime validation pending**.
+Status: **complete**.
 
 Scope:
 - Survival crafting recipe.
@@ -98,13 +98,24 @@ Exit criteria:
 
 ## M5 — Compatibility hardening
 
+Status: **implemented; PR CI validation pending, live Minecraft release-gate testing remains**.
+
 Scope:
-- Vanilla enchantments.
-- Modded/data-driven enchantments.
-- Treasure enchantments.
-- Curses.
-- Above-vanilla enchantment levels.
-- Dedicated-server validation.
+- Generic/data-driven enchantment regression coverage.
+- Above-normal level preservation.
+- Extra item-component preservation.
+- Hardened automation capability boundaries.
+- Curse and treasure-enchantment runtime test matrix.
+- Modded-enchantment runtime test matrix.
+- Dedicated-server, persistence, automation, and multiplayer pre-release plan.
+
+Exit criteria:
+- `./gradlew build` succeeds.
+- Arbitrary enchantment holders extract without an allowlist.
+- Above-normal levels survive exactly.
+- Automation cannot steal source/input stacks or insert output.
+- Automation may pull completed output.
+- Pre-v1 Minecraft test plan is documented and ready to execute.
 
 ## v1.0.0
 

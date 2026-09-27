@@ -112,6 +112,58 @@ class EnchantmentExtractorTest {
     }
 
     @Test
+    void arbitraryDataDrivenEnchantmentRequiresNoAllowlist() {
+        Holder<Enchantment> modded = testEnchantment("modded:void_step", 3);
+
+        ItemStack source = new ItemStack(Items.DIAMOND_PICKAXE);
+        source.enchant(modded, 2);
+
+        ExtractionResult.Success success = assertInstanceOf(
+                ExtractionResult.Success.class,
+                EnchantmentExtractor.extract(source, modded));
+
+        assertEquals(2, success.enchantedBook()
+                .getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY)
+                .getLevel(modded));
+    }
+
+    @Test
+    void aboveDeclaredMaxLevelIsPreservedExactly() {
+        Holder<Enchantment> overlevelled = testEnchantment("overlevelled", 5);
+
+        ItemStack source = new ItemStack(Items.DIAMOND_PICKAXE);
+        source.enchant(overlevelled, 12);
+
+        ExtractionResult.Success success = assertInstanceOf(
+                ExtractionResult.Success.class,
+                EnchantmentExtractor.extract(source, overlevelled));
+
+        assertEquals(12, success.extracted().level());
+        assertEquals(12, success.enchantedBook()
+                .getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY)
+                .getLevel(overlevelled));
+    }
+
+    @Test
+    void unrelatedComponentsSurviveCompatibilityExtraction() {
+        Holder<Enchantment> modded = testEnchantment("modded:oddity", 1);
+
+        ItemStack source = new ItemStack(Items.DIAMOND_PICKAXE);
+        source.enchant(modded, 1);
+        source.set(DataComponents.CUSTOM_NAME, Component.literal("Component Soup"));
+        source.set(DataComponents.REPAIR_COST, 19);
+        source.set(DataComponents.DAMAGE, 77);
+
+        ExtractionResult.Success success = assertInstanceOf(
+                ExtractionResult.Success.class,
+                EnchantmentExtractor.extract(source, modded));
+
+        assertEquals(Component.literal("Component Soup"), success.source().get(DataComponents.CUSTOM_NAME));
+        assertEquals(19, success.source().getOrDefault(DataComponents.REPAIR_COST, 0));
+        assertEquals(77, success.source().getOrDefault(DataComponents.DAMAGE, 0));
+    }
+
+    @Test
     void emptySourceFailsBeforeSelectionValidation() {
         ExtractionResult.Failure failure = assertInstanceOf(
                 ExtractionResult.Failure.class,

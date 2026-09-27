@@ -2,6 +2,35 @@
 
 ## Unreleased
 
+### M5 — 2026-09-27
+
+#### Changed
+- Added compatibility tests proving arbitrary/data-driven enchantments require no hardcoded allowlist.
+- Added exact preservation tests for above-normal enchantment levels.
+- Expanded component-preservation coverage to include custom name, damage, and repair cost.
+- Added a restricted automation item-handler wrapper.
+- External automation may insert valid source items/books and extract completed output, but may not extract input/source stacks or insert directly into the output.
+- Added automation simulation tests to guard against mutation during capability probing.
+- Expanded compatibility documentation around curses, treasure enchantments, modded enchantments, and custom storage mechanisms.
+- Added a full pre-v1 Minecraft test plan covering dedicated server, multiplayer, persistence, block breaking, automation, stale selections, and real modpack enchantments.
+
+#### Why
+M5 moves Arcane Extraction from feature-complete to release-candidate hardening. The core extractor is already generic, so this milestone focuses on proving that assumption, locking down automation boundaries, and defining the live test gates required before v1.0.0.
+
+#### Validation
+- M4 is merged and CI-validated.
+- M5 adds automated compatibility and automation regression coverage.
+- PR CI is the authoritative clean-environment compile/test validation.
+- Real curse, treasure, modded-enchantment, dedicated-server, and multiplayer behavior remains intentionally gated by the pre-release Minecraft test plan.
+
+#### Limitations
+- Arcane Extraction only sees enchantments stored in Minecraft's normal item enchantment component.
+- Mods that store enchantments in a separate custom capability/component may require explicit integration.
+- v1.0.0 is not ready until the live Minecraft test plan passes.
+
+#### Next
+Run the pre-v1 Minecraft test plan on the actual NeoForge 1.21.1 server pack, fix any failures, then prepare v1.0.0.
+
 ### M4 — 2026-09-27
 
 #### Changed

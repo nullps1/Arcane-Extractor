@@ -75,6 +75,25 @@ In a survival or development world:
 6. Complete one extraction and confirm the enchanting-table sound and enchant particles play once.
 7. Verify the machine remains available in the Functional Blocks creative tab.
 
+## M5 automated coverage
+
+Compatibility tests verify:
+
+- arbitrary/data-driven enchantment holders do not require a hardcoded ID;
+- above-normal enchantment levels are preserved exactly;
+- custom name, damage, and repair cost survive extraction;
+- automation can insert valid source items and ordinary books;
+- automation cannot insert directly into output;
+- automation cannot extract source items or input books;
+- automation can extract completed output;
+- simulated insertion does not mutate inventory.
+
+## Pre-v1 release gate
+
+Execute every check in [PRE_RELEASE_TEST_PLAN.md](PRE_RELEASE_TEST_PLAN.md) against the actual NeoForge 1.21.1 client/server pack before tagging v1.0.0.
+
+This is where curse, treasure, real modded-enchantment, multiplayer, dedicated-server, save/reload, and installed-pipe compatibility are validated.
+
 ## Runtime smoke tests
 
 Before a release:
