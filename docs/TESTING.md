@@ -136,6 +136,19 @@ See [M7_VISUALS.md](M7_VISUALS.md) for the current validation record and [PRE_RE
 9. Repeat one exact single extraction and one Extract All operation to confirm the visual-only retheme did not disturb M6.
 10. Save/reload once and verify model facing and GUI still render normally.
 
+## M7.2 visual checks
+
+1. Open the GUI at the normal gameplay GUI scale and confirm the wider 204px layout feels comfortably spaced.
+2. Confirm Source and Books labels/slots no longer crowd each other.
+3. Confirm long enchantment names gain useful extra ledger width and still clip/tool-tip safely when necessary.
+4. Confirm the output 3x2 bank and Extract / Extract All / paging controls have clear separation from the enchantment ledger.
+5. Confirm the player inventory is centered beneath the machine interface and every visible frame matches its actual slot.
+6. Inspect front, back, and both side views of the block; confirm the thicker amethyst/support depth and rear brace improve the side silhouette.
+7. Check outline/collision from all four facings.
+8. Repeat one single extraction and one Extract All operation to confirm the coordinate-only GUI changes did not disturb M6.
+9. Save/reload and verify facing, slots, and rendering remain correct.
+10. If accepted, freeze the visual design for v1.0.0.
+
 ## Final pre-v1 release gate
 
 Execute every check in [PRE_RELEASE_TEST_PLAN.md](PRE_RELEASE_TEST_PLAN.md) against the actual NeoForge 1.21.1 client/server pack before tagging v1.0.0.
