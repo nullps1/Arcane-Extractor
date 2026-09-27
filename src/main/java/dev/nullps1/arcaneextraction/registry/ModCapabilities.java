@@ -10,6 +10,6 @@ public final class ModCapabilities {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.ARCANE_EXTRACTOR.get(),
-                (blockEntity, side) -> blockEntity.inventory());
+                (blockEntity, side) -> blockEntity.automationInventory());
     }
 }
