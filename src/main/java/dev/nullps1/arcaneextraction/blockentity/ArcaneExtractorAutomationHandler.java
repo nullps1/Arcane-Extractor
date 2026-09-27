@@ -22,7 +22,7 @@ public final class ArcaneExtractorAutomationHandler implements IItemHandler {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (slot == ArcaneExtractorInventory.OUTPUT_SLOT) {
+        if (ArcaneExtractorInventory.isOutputSlot(slot)) {
             return stack;
         }
         return inventory.insertItem(slot, stack, simulate);
@@ -30,7 +30,7 @@ public final class ArcaneExtractorAutomationHandler implements IItemHandler {
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if (slot != ArcaneExtractorInventory.OUTPUT_SLOT) {
+        if (!ArcaneExtractorInventory.isOutputSlot(slot)) {
             return ItemStack.EMPTY;
         }
         return inventory.extractItem(slot, amount, simulate);
@@ -43,7 +43,7 @@ public final class ArcaneExtractorAutomationHandler implements IItemHandler {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-        return slot != ArcaneExtractorInventory.OUTPUT_SLOT
+        return !ArcaneExtractorInventory.isOutputSlot(slot)
                 && inventory.isItemValid(slot, stack);
     }
 }
