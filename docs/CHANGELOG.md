@@ -2,6 +2,28 @@
 
 ## Unreleased
 
+### M7.1 — Medieval Magic Retheme — 2026-09-27
+
+#### Changed
+- Replaced the industrial standing-apparatus visual language with a grindstone-inspired medieval magical workstation.
+- The block now uses crying obsidian feet/supports, a dark-oak frame and work shelf, polished-blackstone hardware, and an amethyst crystal extraction core.
+- Preserved four horizontal facings and open workstation geometry while updating collision/outline shapes to match the new model.
+- Replaced the industrial GUI presentation with a procedural carved-wood, parchment, blackstone, and amethyst theme.
+- Rethemed action buttons as carved arcane tablets while preserving vanilla button interaction, narration, and all M6 controls.
+- Preserved the existing M6 slot positions, six-slot output buffer, exact registry-ID selection, Extract All, automation, persistence, recipe, sound, particles, and networking.
+
+#### Why
+Owner visual testing found the M7 art direction polished but too modern/industrial. M7.1 shifts the same proven interface toward a vanilla-adjacent medieval magic identity: a wizard-artisan workstation rather than an arcane machine.
+
+#### Validation
+- Updated the visual regression contract for vanilla material texture references and the new model geometry.
+- Existing M1–M6 functional tests remain the gameplay regression gate.
+- PR CI is the clean-environment build/test gate.
+- Final acceptance requires an in-game visual pass at normal GUI scale and placement from all four directions.
+
+#### Next
+Run the M7.1 visual acceptance checklist. If accepted, proceed to v1.0.0 release packaging.
+
 ### M7 — 2026-09-27
 
 #### Changed
