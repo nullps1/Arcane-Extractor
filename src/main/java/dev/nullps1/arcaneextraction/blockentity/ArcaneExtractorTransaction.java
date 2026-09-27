@@ -18,13 +18,14 @@ public final class ArcaneExtractorTransaction {
 
         ItemStack source = inventory.getStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT);
         ItemStack book = inventory.getStackInSlot(ArcaneExtractorInventory.BOOK_SLOT);
-        ItemStack output = inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_SLOT);
 
         if (!book.is(Items.BOOK) || book.isEmpty()) {
             return new Failure(FailureReason.MISSING_BOOK, null);
         }
-        if (!output.isEmpty()) {
-            return new Failure(FailureReason.OUTPUT_OCCUPIED, null);
+
+        int outputSlot = firstEmptyOutputSlot(inventory);
+        if (outputSlot < 0) {
+            return new Failure(FailureReason.OUTPUT_FULL, null);
         }
 
         ExtractionResult extraction = EnchantmentExtractor.extract(source, selected);
@@ -38,14 +39,25 @@ public final class ArcaneExtractorTransaction {
 
         inventory.setStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT, success.source());
         inventory.setStackInSlot(ArcaneExtractorInventory.BOOK_SLOT, remainingBooks);
-        inventory.setStackInSlot(ArcaneExtractorInventory.OUTPUT_SLOT, success.enchantedBook());
+        inventory.setStackInSlot(outputSlot, success.enchantedBook());
 
-        return new Success(success);
+        return new Success(success, outputSlot);
+    }
+
+    private static int firstEmptyOutputSlot(IItemHandlerModifiable inventory) {
+        for (int slot = ArcaneExtractorInventory.OUTPUT_START;
+                slot < ArcaneExtractorInventory.OUTPUT_END;
+                slot++) {
+            if (inventory.getStackInSlot(slot).isEmpty()) {
+                return slot;
+            }
+        }
+        return -1;
     }
 
     public sealed interface Result permits Success, Failure {}
 
-    public record Success(ExtractionResult.Success extraction) implements Result {
+    public record Success(ExtractionResult.Success extraction, int outputSlot) implements Result {
         public Success {
             Objects.requireNonNull(extraction, "extraction");
         }
@@ -59,7 +71,7 @@ public final class ArcaneExtractorTransaction {
 
     public enum FailureReason {
         MISSING_BOOK,
-        OUTPUT_OCCUPIED,
+        OUTPUT_FULL,
         EXTRACTION_REJECTED
     }
 }

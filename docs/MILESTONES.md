@@ -98,7 +98,7 @@ Exit criteria:
 
 ## M5 — Compatibility hardening
 
-Status: **implemented; PR CI validation pending, live Minecraft release-gate testing remains**.
+Status: **complete; live Minecraft release-gate testing remains**.
 
 Scope:
 - Generic/data-driven enchantment regression coverage.
@@ -116,6 +116,30 @@ Exit criteria:
 - Automation cannot steal source/input stacks or insert output.
 - Automation may pull completed output.
 - Pre-v1 Minecraft test plan is documented and ready to execute.
+
+## M6 — Interaction hardening
+
+Status: **implemented; PR CI and renewed live Minecraft validation pending**.
+
+Scope:
+- Exact enchantment registry-ID selection over a serverbound payload.
+- Server-side resolution against the current source stack.
+- Six-slot enchanted-book output buffer.
+- Consecutive extraction without manually clearing output.
+- Extract All workflow.
+- Updated automation rules for all buffered outputs.
+- GUI layout for the output bank and new controls.
+- Regression coverage for output-buffer behavior.
+
+Exit criteria:
+- `./gradlew build` succeeds.
+- Selecting Sharpness cannot extract Mending or any other different registry ID.
+- Stale/missing registry IDs are rejected without mutation.
+- Consecutive extractions fill separate output slots.
+- Full buffer stops extraction without consuming another book.
+- Extract All stops safely on no candidates, no books, or no output capacity.
+- Automation can extract from every output slot but still cannot pull source/input stacks.
+- Dedicated-server and two-player live checks pass.
 
 ## v1.0.0
 

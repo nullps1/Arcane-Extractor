@@ -8,7 +8,6 @@ import dev.nullps1.arcaneextraction.extraction.ExtractionCandidate;
 import dev.nullps1.arcaneextraction.registry.ModBlocks;
 import dev.nullps1.arcaneextraction.registry.ModMenus;
 import java.util.List;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public final class ArcaneExtractorMenu extends AbstractContainerMenu {
-    private static final int MACHINE_SLOTS = 3;
+    private static final int MACHINE_SLOTS = ArcaneExtractorInventory.SLOT_COUNT;
     private static final int PLAYER_INVENTORY_START = MACHINE_SLOTS;
     private static final int PLAYER_INVENTORY_END = PLAYER_INVENTORY_START + 27;
     private static final int HOTBAR_START = PLAYER_INVENTORY_END;
@@ -61,14 +60,24 @@ public final class ArcaneExtractorMenu extends AbstractContainerMenu {
         this.machineInventory = machineInventory;
         this.access = access;
 
-        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.SOURCE_SLOT, 26, 35));
-        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.BOOK_SLOT, 62, 35));
-        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.OUTPUT_SLOT, 134, 35) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-        });
+        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.SOURCE_SLOT, 20, 35));
+        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.BOOK_SLOT, 56, 35));
+
+        for (int index = 0; index < ArcaneExtractorInventory.OUTPUT_COUNT; index++) {
+            int column = index % 3;
+            int row = index / 3;
+            int slotIndex = ArcaneExtractorInventory.OUTPUT_START + index;
+            addSlot(new SlotItemHandler(
+                    machineInventory,
+                    slotIndex,
+                    116 + column * 18,
+                    26 + row * 18) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return false;
+                }
+            });
+        }
 
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 9; column++) {
@@ -76,12 +85,12 @@ public final class ArcaneExtractorMenu extends AbstractContainerMenu {
                         playerInventory,
                         column + row * 9 + 9,
                         8 + column * 18,
-                        128 + row * 18));
+                        151 + row * 18));
             }
         }
 
         for (int column = 0; column < 9; column++) {
-            addSlot(new Slot(playerInventory, column, 8 + column * 18, 186));
+            addSlot(new Slot(playerInventory, column, 8 + column * 18, 209));
         }
     }
 
@@ -90,25 +99,32 @@ public final class ArcaneExtractorMenu extends AbstractContainerMenu {
                 machineInventory.getStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT));
     }
 
-    @Override
-    public boolean clickMenuButton(Player player, int id) {
-        if (blockEntity == null || id < 0) {
+    public boolean extractByRegistryId(Player player, String enchantmentId) {
+        if (blockEntity == null || enchantmentId == null || enchantmentId.isBlank()) {
             return false;
         }
 
-        List<ExtractionCandidate> candidates = candidates();
-        if (id >= candidates.size()) {
-            return false;
+        ItemStack source = machineInventory.getStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT);
+        return EnchantmentExtractor.candidateByRegistryId(source, enchantmentId)
+                .map(candidate -> blockEntity.extract(candidate.enchantment()))
+                .filter(result -> result instanceof ArcaneExtractorTransaction.Success)
+                .map(result -> {
+                    broadcastChanges();
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    public int extractAll(Player player) {
+        if (blockEntity == null) {
+            return 0;
         }
 
-        ArcaneExtractorTransaction.Result result =
-                blockEntity.extract(candidates.get(id).enchantment());
-        if (result instanceof ArcaneExtractorTransaction.Success) {
+        int extracted = blockEntity.extractAll();
+        if (extracted > 0) {
             broadcastChanges();
-            return true;
         }
-
-        return false;
+        return extracted;
     }
 
     @Override
@@ -126,13 +142,19 @@ public final class ArcaneExtractorMenu extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
         } else if (machineInventory.isItemValid(ArcaneExtractorInventory.BOOK_SLOT, stack)) {
-            if (!moveItemStackTo(stack, ArcaneExtractorInventory.BOOK_SLOT,
-                    ArcaneExtractorInventory.BOOK_SLOT + 1, false)) {
+            if (!moveItemStackTo(
+                    stack,
+                    ArcaneExtractorInventory.BOOK_SLOT,
+                    ArcaneExtractorInventory.BOOK_SLOT + 1,
+                    false)) {
                 return ItemStack.EMPTY;
             }
         } else if (machineInventory.isItemValid(ArcaneExtractorInventory.SOURCE_SLOT, stack)) {
-            if (!moveItemStackTo(stack, ArcaneExtractorInventory.SOURCE_SLOT,
-                    ArcaneExtractorInventory.SOURCE_SLOT + 1, false)) {
+            if (!moveItemStackTo(
+                    stack,
+                    ArcaneExtractorInventory.SOURCE_SLOT,
+                    ArcaneExtractorInventory.SOURCE_SLOT + 1,
+                    false)) {
                 return ItemStack.EMPTY;
             }
         } else if (index < HOTBAR_START) {

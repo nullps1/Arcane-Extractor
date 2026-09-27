@@ -1,6 +1,7 @@
 package dev.nullps1.arcaneextraction.extraction;
 
 import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
@@ -25,6 +26,22 @@ public final class EnchantmentExtractor {
                         enchantment,
                         enchantments.getLevel(enchantment)))
                 .toList();
+    }
+
+    public static Optional<String> registryId(Holder<Enchantment> enchantment) {
+        return enchantment.unwrapKey().map(key -> key.location().toString());
+    }
+
+    public static Optional<ExtractionCandidate> candidateByRegistryId(ItemStack source, String enchantmentId) {
+        if (enchantmentId == null || enchantmentId.isBlank()) {
+            return Optional.empty();
+        }
+
+        return candidates(source).stream()
+                .filter(candidate -> registryId(candidate.enchantment())
+                        .filter(enchantmentId::equals)
+                        .isPresent())
+                .findFirst();
     }
 
     public static ExtractionResult extract(ItemStack source, Holder<Enchantment> selected) {

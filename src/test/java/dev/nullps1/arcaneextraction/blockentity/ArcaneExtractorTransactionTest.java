@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 
 class ArcaneExtractorTransactionTest {
     @Test
-    void successfulExtractionConsumesOneBookAndProducesOutput() {
+    void successfulExtractionConsumesOneBookAndUsesFirstOutputSlot() {
         Holder<Enchantment> efficiency = testEnchantment("efficiency", 5);
         Holder<Enchantment> unbreaking = testEnchantment("unbreaking", 5);
 
@@ -37,14 +37,42 @@ class ArcaneExtractorTransactionTest {
 
         ItemEnchantments remaining = inventory.getStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT)
                 .getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
-        ItemEnchantments stored = inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_SLOT)
+        ItemEnchantments stored = inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_START)
                 .getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
 
         assertEquals(5, remaining.getLevel(efficiency));
         assertEquals(0, remaining.getLevel(unbreaking));
         assertEquals(1, inventory.getStackInSlot(ArcaneExtractorInventory.BOOK_SLOT).getCount());
         assertEquals(3, stored.getLevel(unbreaking));
-        assertEquals(3, success.extraction().extracted().level());
+        assertEquals(ArcaneExtractorInventory.OUTPUT_START, success.outputSlot());
+    }
+
+    @Test
+    void repeatedExtractionUsesNextFreeOutputWithoutClearingPreviousBook() {
+        Holder<Enchantment> efficiency = testEnchantment("efficiency", 5);
+        Holder<Enchantment> unbreaking = testEnchantment("unbreaking", 5);
+
+        ArcaneExtractorInventory inventory = new ArcaneExtractorInventory(() -> {});
+        ItemStack source = new ItemStack(Items.DIAMOND_PICKAXE);
+        source.enchant(efficiency, 5);
+        source.enchant(unbreaking, 3);
+
+        inventory.setStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT, source);
+        inventory.setStackInSlot(ArcaneExtractorInventory.BOOK_SLOT, new ItemStack(Items.BOOK, 2));
+
+        ArcaneExtractorTransaction.Success first = assertInstanceOf(
+                ArcaneExtractorTransaction.Success.class,
+                ArcaneExtractorTransaction.extract(inventory, efficiency));
+        ArcaneExtractorTransaction.Success second = assertInstanceOf(
+                ArcaneExtractorTransaction.Success.class,
+                ArcaneExtractorTransaction.extract(inventory, unbreaking));
+
+        assertEquals(ArcaneExtractorInventory.OUTPUT_START, first.outputSlot());
+        assertEquals(ArcaneExtractorInventory.OUTPUT_START + 1, second.outputSlot());
+        assertTrue(inventory.getStackInSlot(ArcaneExtractorInventory.BOOK_SLOT).isEmpty());
+        assertEquals(0, inventory.getStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT)
+                .getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
+                .size());
     }
 
     @Test
@@ -64,11 +92,11 @@ class ArcaneExtractorTransactionTest {
         assertEquals(5, inventory.getStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT)
                 .getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
                 .getLevel(efficiency));
-        assertTrue(inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_SLOT).isEmpty());
+        assertTrue(inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_START).isEmpty());
     }
 
     @Test
-    void occupiedOutputRejectsWithoutConsumingBook() {
+    void fullOutputBufferRejectsWithoutConsumingBook() {
         Holder<Enchantment> efficiency = testEnchantment("efficiency", 5);
 
         ArcaneExtractorInventory inventory = new ArcaneExtractorInventory(() -> {});
@@ -77,13 +105,17 @@ class ArcaneExtractorTransactionTest {
 
         inventory.setStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT, source);
         inventory.setStackInSlot(ArcaneExtractorInventory.BOOK_SLOT, new ItemStack(Items.BOOK, 2));
-        inventory.setStackInSlot(ArcaneExtractorInventory.OUTPUT_SLOT, new ItemStack(Items.ENCHANTED_BOOK));
+        for (int slot = ArcaneExtractorInventory.OUTPUT_START;
+                slot < ArcaneExtractorInventory.OUTPUT_END;
+                slot++) {
+            inventory.setStackInSlot(slot, new ItemStack(Items.ENCHANTED_BOOK));
+        }
 
         ArcaneExtractorTransaction.Failure failure = assertInstanceOf(
                 ArcaneExtractorTransaction.Failure.class,
                 ArcaneExtractorTransaction.extract(inventory, efficiency));
 
-        assertEquals(ArcaneExtractorTransaction.FailureReason.OUTPUT_OCCUPIED, failure.reason());
+        assertEquals(ArcaneExtractorTransaction.FailureReason.OUTPUT_FULL, failure.reason());
         assertEquals(2, inventory.getStackInSlot(ArcaneExtractorInventory.BOOK_SLOT).getCount());
         assertEquals(5, inventory.getStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT)
                 .getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
@@ -91,16 +123,21 @@ class ArcaneExtractorTransactionTest {
     }
 
     @Test
-    void slotValidationMatchesMachineContract() {
+    void slotValidationMatchesBufferedMachineContract() {
         Holder<Enchantment> efficiency = testEnchantment("efficiency", 5);
         ItemStack enchantedTool = new ItemStack(Items.DIAMOND_PICKAXE);
         enchantedTool.enchant(efficiency, 1);
 
         ArcaneExtractorInventory inventory = new ArcaneExtractorInventory(() -> {});
 
+        assertEquals(8, inventory.getSlots());
         assertTrue(inventory.isItemValid(ArcaneExtractorInventory.SOURCE_SLOT, enchantedTool));
         assertTrue(inventory.isItemValid(ArcaneExtractorInventory.BOOK_SLOT, new ItemStack(Items.BOOK)));
-        assertTrue(!inventory.isItemValid(ArcaneExtractorInventory.OUTPUT_SLOT, new ItemStack(Items.BOOK)));
+        for (int slot = ArcaneExtractorInventory.OUTPUT_START;
+                slot < ArcaneExtractorInventory.OUTPUT_END;
+                slot++) {
+            assertTrue(!inventory.isItemValid(slot, new ItemStack(Items.BOOK)));
+        }
     }
 
     private static Holder<Enchantment> testEnchantment(String name, int maxLevel) {

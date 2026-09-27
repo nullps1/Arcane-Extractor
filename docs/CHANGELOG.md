@@ -2,6 +2,31 @@
 
 ## Unreleased
 
+### M6 — 2026-09-27
+
+#### Changed
+- Replaced candidate-index extraction requests with a custom serverbound payload carrying the selected enchantment registry ID.
+- Server-side extraction now resolves that exact registry ID against the current authoritative source stack before mutating inventory.
+- Replaced the single output slot with a six-slot output buffer.
+- Repeated extraction now writes each enchanted book into the first free output slot.
+- Added an **Extract All** action that repeatedly extracts from the current source until no candidates remain, input books run out, or the six-slot output buffer fills.
+- Updated automation exposure so external systems may pull from any output-buffer slot while input/source protection remains unchanged.
+- Updated the GUI to display a 3x2 output bank alongside separate Extract and Extract All controls.
+- Added legacy inventory migration so existing 3-slot Arcane Extractors expand to the new 8-slot layout without losing their old source, book, or output contents.
+- Added regression tests for repeated buffered extraction, full-buffer rejection, and extraction from any automation-visible output slot.
+
+#### Why
+Live pre-v1 testing found that client/server candidate ordering could diverge, allowing a selected row such as Sharpness to remove a different enchantment such as Mending. Live testing also showed that requiring the single output slot to be manually cleared after every extraction made multi-enchantment rework unnecessarily tedious.
+
+#### Validation
+- Exact registry identity is now the selection contract; list order is presentation-only.
+- Full-output and missing-book failures remain non-mutating.
+- M6 CI is the compile/test gate before renewed live Minecraft testing.
+- The anvil prior-work reset from the pre-v1 repair-cost fix remains unchanged; vanilla/anvil-mod prior-work accumulation after applying new books is outside the extractor transaction.
+
+#### Next
+Repeat the pre-v1 Minecraft test plan with special focus on exact selected-enchantment identity, repeated extraction, Extract All, output-buffer persistence, automation, and multiplayer concurrency.
+
 ### Pre-v1 repair-cost regression fix — 2026-09-27
 
 #### Changed

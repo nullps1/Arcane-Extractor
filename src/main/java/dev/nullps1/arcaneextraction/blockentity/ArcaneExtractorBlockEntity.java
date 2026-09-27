@@ -1,6 +1,9 @@
 package dev.nullps1.arcaneextraction.blockentity;
 
+import dev.nullps1.arcaneextraction.extraction.EnchantmentExtractor;
+import dev.nullps1.arcaneextraction.extraction.ExtractionCandidate;
 import dev.nullps1.arcaneextraction.registry.ModBlockEntities;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -49,27 +52,60 @@ public final class ArcaneExtractorBlockEntity extends BlockEntity {
                 ArcaneExtractorTransaction.extract(inventory, selected);
 
         if (result instanceof ArcaneExtractorTransaction.Success) {
-            serverLevel.playSound(
-                    null,
-                    worldPosition,
-                    SoundEvents.ENCHANTMENT_TABLE_USE,
-                    SoundSource.BLOCKS,
-                    0.8F,
-                    1.15F);
-
-            serverLevel.sendParticles(
-                    ParticleTypes.ENCHANT,
-                    worldPosition.getX() + 0.5D,
-                    worldPosition.getY() + 1.0D,
-                    worldPosition.getZ() + 0.5D,
-                    18,
-                    0.35D,
-                    0.25D,
-                    0.35D,
-                    0.05D);
+            playExtractionFeedback(serverLevel);
         }
 
         return result;
+    }
+
+    public int extractAll() {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return 0;
+        }
+
+        int extracted = 0;
+        while (true) {
+            List<ExtractionCandidate> candidates = EnchantmentExtractor.candidates(
+                    inventory.getStackInSlot(ArcaneExtractorInventory.SOURCE_SLOT));
+            if (candidates.isEmpty()) {
+                break;
+            }
+
+            ArcaneExtractorTransaction.Result result =
+                    ArcaneExtractorTransaction.extract(inventory, candidates.getFirst().enchantment());
+            if (!(result instanceof ArcaneExtractorTransaction.Success)) {
+                break;
+            }
+
+            extracted++;
+        }
+
+        if (extracted > 0) {
+            playExtractionFeedback(serverLevel);
+        }
+
+        return extracted;
+    }
+
+    private void playExtractionFeedback(ServerLevel serverLevel) {
+        serverLevel.playSound(
+                null,
+                worldPosition,
+                SoundEvents.ENCHANTMENT_TABLE_USE,
+                SoundSource.BLOCKS,
+                0.8F,
+                1.15F);
+
+        serverLevel.sendParticles(
+                ParticleTypes.ENCHANT,
+                worldPosition.getX() + 0.5D,
+                worldPosition.getY() + 1.0D,
+                worldPosition.getZ() + 0.5D,
+                18,
+                0.35D,
+                0.25D,
+                0.35D,
+                0.05D);
     }
 
     @Override
