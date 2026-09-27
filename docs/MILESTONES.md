@@ -34,7 +34,7 @@ Exit criteria:
 
 ## M2 — Arcane Extractor block
 
-Status: **implemented; PR CI validation pending**.
+Status: **complete**.
 
 Scope:
 - Block + block item.
@@ -55,11 +55,24 @@ Exit criteria:
 
 ## M3 — Menu and GUI
 
+Status: **implemented; PR CI and runtime validation pending**.
+
 Scope:
-- Enchantment list.
-- Selection state.
-- Extract action.
-- Server validation of client requests.
+- Registered server-backed menu.
+- Source/book/output and player inventory slots.
+- Shift-click routing.
+- Client-only selectable enchantment list with paging.
+- Extract button using vanilla menu-button networking.
+- Server-side candidate-index validation before extraction.
+
+Exit criteria:
+- `./gradlew build` succeeds.
+- Right-click opens the menu on an integrated and dedicated server.
+- Inserting enchanted gear updates the candidate list.
+- Every candidate remains reachable through paging.
+- Clicking Extract invokes the M2 transaction for the server's current candidate at that index.
+- Invalid/stale indices do not mutate inventory.
+- Dedicated server loads without client-class linkage failures.
 
 ## M4 — Survival integration
 

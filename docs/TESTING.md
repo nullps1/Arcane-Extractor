@@ -50,6 +50,19 @@ Before merging/releasing M2, place an Arcane Extractor in a development world an
 - the item-handler capability is discoverable server-side;
 - no client-only class is loaded on a dedicated server.
 
+## M3 runtime checks
+
+In a development client connected to a logical server:
+
+1. Place the Arcane Extractor and right-click it with an empty hand.
+2. Confirm source, book, output, player inventory, and hotbar slots render and transfer items correctly.
+3. Insert an item with multiple enchantments and confirm the visible list matches the source.
+4. Use paging on an item with more than four enchantments.
+5. Select an enchantment and click **Extract**.
+6. Confirm one book is consumed, the selected enchantment is removed from the source, and the exact level appears on the output book.
+7. Change/remove the source before a stale selection can be acted upon and confirm the server rejects an invalid index without partial mutation.
+8. Start `runServer` and verify no client-only M3 classes are loaded on the dedicated server.
+
 ## Runtime smoke tests
 
 Before a release:
