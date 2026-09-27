@@ -21,13 +21,13 @@ For every case, verify:
 
 Cases:
 - [ ] single enchantment;
-- [ ] multiple enchantments;
+- [ ] multiple enchantments, verifying the exact highlighted enchantment is the one removed;
 - [ ] Mending;
 - [ ] Curse of Binding on valid equipment;
 - [ ] Curse of Vanishing;
 - [ ] item with more than four enchantments;
 - [ ] heavily damaged named item;
-- [ ] item with a high anvil prior-work penalty: after one successful extraction, verify subsequent anvil costs return to a sane baseline rather than continuing the prior-work escalation.
+- [ ] item with a high anvil prior-work penalty: verify a successful extraction clears the old prior-work penalty before the next anvil operation. New anvil operations may build a new prior-work penalty normally.
 
 ## Gate C — modded and nonstandard enchantments
 
@@ -45,9 +45,12 @@ Record the mod and enchantment names tested in the release notes.
 - [ ] source slot empty;
 - [ ] source item unenchanted;
 - [ ] book slot empty;
-- [ ] output slot occupied;
+- [ ] all six output-buffer slots occupied;
 - [ ] selection becomes stale because the source changes;
-- [ ] repeated Extract click after the selected enchantment has already been removed.
+- [ ] repeated Extract click after the selected enchantment has already been removed;
+- [ ] send a stale selection after changing the source item and confirm the requested registry ID is rejected if absent;
+- [ ] use Extract All with too few books and confirm it stops cleanly;
+- [ ] use Extract All with insufficient output capacity and confirm it stops cleanly.
 
 Expected result: no duplicate output, no lost source item, no extra book consumption, no partial mutation.
 
@@ -65,7 +68,7 @@ Test with:
 - [ ] source only;
 - [ ] books only;
 - [ ] output only;
-- [ ] all three slots populated.
+- [ ] source, books, and all six output slots populated.
 
 Expected result: machine and stored items drop exactly once with no duplication or loss.
 
@@ -77,16 +80,18 @@ Using vanilla hoppers and any installed item pipes:
 - [ ] confirm automation cannot insert into output;
 - [ ] confirm automation cannot pull the source;
 - [ ] confirm automation cannot pull input books;
-- [ ] confirm automation can pull completed enchanted-book output;
+- [ ] confirm automation can pull completed enchanted-book output from every output-buffer slot;
 - [ ] confirm repeated polling/simulation by pipes does not mutate inventory.
 
 ## Gate H — multiplayer
 
 With two players:
 - [ ] both can open the machine without desync;
-- [ ] one player's extraction updates the other open menu;
+- [ ] one player's extraction updates the other open menu and output bank;
 - [ ] simultaneous clicks do not duplicate books or enchantments;
-- [ ] removing/changing the source while another player has a selection does not produce a stale extraction.
+- [ ] removing/changing the source while another player has a selection does not produce a stale extraction;
+- [ ] with Sharpness and Mending on the same item, selecting either one extracts that exact enchantment for both players;
+- [ ] Extract All under two-player observation produces no duplicate books or enchantments.
 
 ## Release gate
 
