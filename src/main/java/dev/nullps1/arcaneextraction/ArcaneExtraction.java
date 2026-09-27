@@ -1,6 +1,10 @@
 package dev.nullps1.arcaneextraction;
 
 import com.mojang.logging.LogUtils;
+import dev.nullps1.arcaneextraction.registry.ModBlockEntities;
+import dev.nullps1.arcaneextraction.registry.ModBlocks;
+import dev.nullps1.arcaneextraction.registry.ModCapabilities;
+import dev.nullps1.arcaneextraction.registry.ModItems;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import org.slf4j.Logger;
@@ -11,6 +15,11 @@ public final class ArcaneExtraction {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public ArcaneExtraction(IEventBus modEventBus) {
+        ModBlocks.register(modEventBus);
+        ModItems.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+        modEventBus.addListener(ModCapabilities::register);
+
         LOGGER.info("Arcane Extraction initializing");
     }
 }
