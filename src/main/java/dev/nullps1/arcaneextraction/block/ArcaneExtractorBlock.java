@@ -35,12 +35,18 @@ public final class ArcaneExtractorBlock extends BaseEntityBlock {
     public static final MapCodec<ArcaneExtractorBlock> CODEC = simpleCodec(ArcaneExtractorBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShape NORTH_SHAPE = Shapes.or(
-            Block.box(1, 0, 2, 15, 2, 14),
-            Block.box(2, 2, 8, 4, 13, 12), Block.box(12, 2, 8, 14, 13, 12),
-            Block.box(4, 5, 8, 12, 6, 12), Block.box(4, 6, 8, 12, 14, 12),
-            Block.box(4, 14, 8, 12, 15, 12), Block.box(4, 6, 7.5, 12, 14, 8),
-            Block.box(5, 8, 7, 11, 12, 7.5), Block.box(6, 9, 6.5, 10, 11, 7),
-            Block.box(3, 4, 2, 13, 5, 8), Block.box(6, 2, 5, 10, 4, 8));
+            Block.box(1, 0, 5, 4, 3, 11),
+            Block.box(12, 0, 5, 15, 3, 11),
+            Block.box(2, 3, 6, 4, 9, 10),
+            Block.box(12, 3, 6, 14, 9, 10),
+            Block.box(2, 9, 6, 14, 11, 10),
+            Block.box(4, 11, 7, 12, 13, 9),
+            Block.box(6, 8, 5, 10, 10, 11),
+            Block.box(5, 10, 5, 11, 14, 11),
+            Block.box(6, 14, 5, 10, 16, 11),
+            Block.box(3, 5, 1, 13, 7, 6),
+            Block.box(6, 3, 4, 10, 5, 6),
+            Block.box(6, 7, 4, 10, 8, 5));
     private static final VoxelShape EAST_SHAPE = rotateClockwise(NORTH_SHAPE);
     private static final VoxelShape SOUTH_SHAPE = rotateClockwise(EAST_SHAPE);
     private static final VoxelShape WEST_SHAPE = rotateClockwise(SOUTH_SHAPE);
