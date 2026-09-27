@@ -24,6 +24,10 @@ public final class ArcaneExtractorBlockEntity extends BlockEntity {
         return inventory;
     }
 
+    public ArcaneExtractorInventory machineInventory() {
+        return inventory;
+    }
+
     public ArcaneExtractorTransaction.Result extract(Holder<Enchantment> selected) {
         if (level == null || level.isClientSide()) {
             return new ArcaneExtractorTransaction.Failure(
