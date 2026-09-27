@@ -16,7 +16,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneExtractorMenu> {
     private static final int LIST_X = 11;
     private static final int LIST_Y = 70;
-    private static final int LIST_WIDTH = 84;
+    private static final int LIST_WIDTH = 104;
     private static final int ROW_HEIGHT = 12;
     private static final int ROWS_PER_PAGE = 4;
 
@@ -43,7 +43,7 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
             Inventory inventory,
             Component title) {
         super(menu, inventory, title);
-        imageWidth = 176;
+        imageWidth = 204;
         imageHeight = 233;
         inventoryLabelY = 139;
     }
@@ -52,13 +52,13 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
     protected void init() {
         super.init();
 
-        extractButton = addRenderableWidget(new ArcaneButton(leftPos + 103, topPos + 69, 65,
+        extractButton = addRenderableWidget(new ArcaneButton(leftPos + 127, topPos + 69, 69,
                 Component.translatable("screen.arcane_extraction.extract"), button -> requestExtraction(), true));
-        extractAllButton = addRenderableWidget(new ArcaneButton(leftPos + 103, topPos + 93, 65,
+        extractAllButton = addRenderableWidget(new ArcaneButton(leftPos + 127, topPos + 93, 69,
                 Component.translatable("screen.arcane_extraction.extract_all"), button -> requestExtractAll(), false));
-        previousButton = addRenderableWidget(new ArcaneButton(leftPos + 103, topPos + 117, 30,
+        previousButton = addRenderableWidget(new ArcaneButton(leftPos + 127, topPos + 117, 32,
                 Component.literal("<"), button -> changePage(-ROWS_PER_PAGE), false));
-        nextButton = addRenderableWidget(new ArcaneButton(leftPos + 138, topPos + 117, 30,
+        nextButton = addRenderableWidget(new ArcaneButton(leftPos + 166, topPos + 117, 30,
                 Component.literal(">"), button -> changePage(ROWS_PER_PAGE), false));
 
         refreshControls();
@@ -150,42 +150,42 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
         graphics.fill(x + 14, y + 12, x + imageWidth - 14, y + 13, AMETHYST);
 
         // Work area: parchment ledger left, dark output altar right.
-        drawParchmentPanel(graphics, x + 7, y + 18, x + 99, y + 136);
-        drawStonePanel(graphics, x + 101, y + 18, x + 169, y + 136);
+        drawParchmentPanel(graphics, x + 7, y + 18, x + 119, y + 136);
+        drawStonePanel(graphics, x + 121, y + 18, x + 197, y + 136);
 
         // Enchantment ledger inset.
-        graphics.fill(x + 8, y + 64, x + 98, y + 123, PARCHMENT_DARK);
-        graphics.fill(x + 10, y + 66, x + 96, y + 121, PARCHMENT);
+        graphics.fill(x + 8, y + 64, x + 118, y + 123, PARCHMENT_DARK);
+        graphics.fill(x + 10, y + 66, x + 116, y + 121, PARCHMENT);
 
         // Decorative rune divider.
-        graphics.fill(x + 99, y + 24, x + 101, y + 132, WOOD_DARK);
-        graphics.fill(x + 100, y + 38, x + 101, y + 50, AMETHYST);
-        graphics.fill(x + 100, y + 82, x + 101, y + 94, AMETHYST);
+        graphics.fill(x + 119, y + 24, x + 121, y + 132, WOOD_DARK);
+        graphics.fill(x + 120, y + 38, x + 121, y + 50, AMETHYST);
+        graphics.fill(x + 120, y + 82, x + 121, y + 94, AMETHYST);
 
         // Machine slots.
-        drawSlotFrame(graphics, x + 19, y + 34);
-        drawSlotFrame(graphics, x + 55, y + 34);
+        drawSlotFrame(graphics, x + 27, y + 34);
+        drawSlotFrame(graphics, x + 71, y + 34);
         for (int index = 0; index < 6; index++) {
             int column = index % 3;
             int row = index / 3;
-            drawSlotFrame(graphics, x + 115 + column * 18, y + 25 + row * 18);
+            drawSlotFrame(graphics, x + 135 + column * 18, y + 25 + row * 18);
         }
 
         // Arcane transfer marks.
-        graphics.fill(x + 42, y + 41, x + 49, y + 43, AMETHYST);
-        graphics.fill(x + 47, y + 39, x + 50, y + 45, AMETHYST_LIGHT);
-        graphics.fill(x + 78, y + 41, x + 105, y + 43, AMETHYST);
-        graphics.fill(x + 102, y + 39, x + 106, y + 45, AMETHYST_LIGHT);
+        graphics.fill(x + 50, y + 41, x + 61, y + 43, AMETHYST);
+        graphics.fill(x + 59, y + 39, x + 62, y + 45, AMETHYST_LIGHT);
+        graphics.fill(x + 94, y + 41, x + 125, y + 43, AMETHYST);
+        graphics.fill(x + 122, y + 39, x + 126, y + 45, AMETHYST_LIGHT);
 
         // Inventory parchment tray.
-        drawParchmentPanel(graphics, x + 5, y + 145, x + 171, y + 229);
+        drawParchmentPanel(graphics, x + 18, y + 145, x + 186, y + 229);
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 9; column++) {
-                drawSlotFrame(graphics, x + 7 + column * 18, y + 150 + row * 18);
+                drawSlotFrame(graphics, x + 20 + column * 18, y + 150 + row * 18);
             }
         }
         for (int column = 0; column < 9; column++) {
-            drawSlotFrame(graphics, x + 7 + column * 18, y + 208);
+            drawSlotFrame(graphics, x + 20 + column * 18, y + 208);
         }
     }
 
@@ -212,10 +212,10 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
         graphics.drawString(font, title, titleLabelX, titleLabelY, 0xFFF0DDB1, false);
         graphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, INK, false);
-        graphics.drawString(font, Component.translatable("screen.arcane_extraction.source"), 13, 24, INK, false);
-        graphics.drawString(font, Component.translatable("screen.arcane_extraction.books"), 53, 24, INK, false);
-        graphics.drawString(font, Component.translatable("screen.arcane_extraction.output"), 116, 15, 0xFFE8D6F2, false);
-        graphics.drawString(font, Component.translatable("screen.arcane_extraction.enchantments"), 9, 57, INK, false);
+        graphics.drawString(font, Component.translatable("screen.arcane_extraction.source"), 21, 24, INK, false);
+        graphics.drawString(font, Component.translatable("screen.arcane_extraction.books"), 66, 24, INK, false);
+        graphics.drawString(font, Component.translatable("screen.arcane_extraction.output"), 136, 15, 0xFFE8D6F2, false);
+        graphics.drawString(font, Component.translatable("screen.arcane_extraction.enchantments"), 11, 57, INK, false);
 
         List<ExtractionCandidate> candidates = menu.candidates();
         int end = Math.min(candidates.size(), pageStart + ROWS_PER_PAGE);
