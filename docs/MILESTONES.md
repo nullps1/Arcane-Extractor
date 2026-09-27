@@ -55,7 +55,7 @@ Exit criteria:
 
 ## M3 — Menu and GUI
 
-Status: **implemented; PR CI and runtime validation pending**.
+Status: **complete**.
 
 Scope:
 - Registered server-backed menu.
@@ -76,11 +76,25 @@ Exit criteria:
 
 ## M4 — Survival integration
 
+Status: **implemented; PR CI and runtime validation pending**.
+
 Scope:
-- Recipe.
-- Models/textures.
-- Loot table.
-- Initial balancing.
+- Survival crafting recipe.
+- Recipe-book discovery.
+- Block loot and correct-tool tags.
+- Safe inventory drops when broken.
+- Creative-tab visibility.
+- Distinct block/item model using vanilla texture assets.
+- Success sound and particles.
+- Initial balancing without an XP tax.
+
+Exit criteria:
+- `./gradlew build` succeeds.
+- Recipe loads and crafts one Arcane Extractor.
+- Recipe appears in the recipe book after obtaining relevant ingredients.
+- Correctly harvested machine drops itself.
+- Breaking a machine with stored items drops those items.
+- Successful extraction plays sound and particles exactly once.
 
 ## M5 — Compatibility hardening
 
