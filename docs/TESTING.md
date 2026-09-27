@@ -119,9 +119,22 @@ The exact registry-ID network selection path is additionally covered by live cli
 
 ## M7 visual regression coverage
 
-`ArcaneExtractorVisualTest` verifies all four blockstate/model rotations against outline and collision geometry, structure rotation/mirroring, the north default, non-occluding block state, item-model inheritance, local PNG references/dimensions, and GUI atlas opacity/dimensions. The existing M1–M6 tests run unchanged.
+`ArcaneExtractorVisualTest` verifies all four blockstate/model rotations against outline and collision geometry, structure rotation/mirroring, the north default, non-occluding block state, item-model inheritance, and the M7.1 vanilla-material texture contract. The existing M1–M6 tests run unchanged.
 
-See [M7_VISUALS.md](M7_VISUALS.md) for the current validation record and [PRE_RELEASE_TEST_PLAN.md](PRE_RELEASE_TEST_PLAN.md#gate-j--m7-visual-acceptance) for final in-pack acceptance. Original assets can be regenerated with `python tools/generate_visual_assets.py` (Python 3 + Pillow); a normal Gradle build uses the checked-in PNGs and does not need Python.
+See [M7_VISUALS.md](M7_VISUALS.md) for the current validation record and [PRE_RELEASE_TEST_PLAN.md](PRE_RELEASE_TEST_PLAN.md#gate-j--m71-medieval-visual-acceptance) for final in-pack acceptance. The retired M7 custom PNG assets may remain for historical comparison, but M7.1 rendering uses vanilla block textures and a procedural GUI and does not require asset generation.
+
+## M7.1 visual checks
+
+1. Place the Arcane Extractor facing north/east/south/west and confirm the work shelf faces the player.
+2. Confirm crying-obsidian supports, dark-oak frame, blackstone hardware, and amethyst core render without missing textures.
+3. Walk around the block and check open space, crystal silhouette, shelf, outline, and collision.
+4. Check the block item in inventory and hand.
+5. Open the GUI and confirm the carved-wood outer frame, parchment enchantment ledger, blackstone output altar, and amethyst accents read clearly.
+6. Verify all 44 slots remain aligned with their visible frames.
+7. Verify long enchantment names, curses, selection highlight, hover tooltip, paging, and empty-source prompt remain readable.
+8. Verify Extract, Extract All, previous, and next buttons in normal, hover/focus, active, and disabled states.
+9. Repeat one exact single extraction and one Extract All operation to confirm the visual-only retheme did not disturb M6.
+10. Save/reload once and verify model facing and GUI still render normally.
 
 ## Final pre-v1 release gate
 

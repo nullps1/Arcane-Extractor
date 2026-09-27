@@ -2,825 +2,147 @@
   "parent": "minecraft:block/block",
   "ambientocclusion": true,
   "textures": {
-    "obsidian": "arcane_extraction:block/extractor_obsidian",
-    "trim": "arcane_extraction:block/extractor_trim",
-    "rune": "arcane_extraction:block/extractor_rune",
-    "amethyst": "arcane_extraction:block/extractor_amethyst",
-    "deck": "arcane_extraction:block/extractor_deck",
-    "particle": "arcane_extraction:block/extractor_obsidian"
+    "obsidian": "minecraft:block/crying_obsidian",
+    "wood": "minecraft:block/dark_oak_planks",
+    "crystal": "minecraft:block/amethyst_block",
+    "stone": "minecraft:block/polished_blackstone",
+    "particle": "minecraft:block/dark_oak_planks"
   },
   "elements": [
     {
-      "name": "plinth",
-      "from": [
-        1,
-        0,
-        2
-      ],
-      "to": [
-        15,
-        2,
-        14
-      ],
+      "name": "left foot",
+      "from": [1, 0, 5],
+      "to": [4, 3, 11],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        }
+        "north": {"texture": "#obsidian"}, "south": {"texture": "#obsidian"},
+        "east": {"texture": "#obsidian"}, "west": {"texture": "#obsidian"},
+        "up": {"texture": "#obsidian"}, "down": {"texture": "#obsidian"}
       }
     },
     {
-      "name": "left upright",
-      "from": [
-        2,
-        2,
-        8
-      ],
-      "to": [
-        4,
-        13,
-        12
-      ],
+      "name": "right foot",
+      "from": [12, 0, 5],
+      "to": [15, 3, 11],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        }
+        "north": {"texture": "#obsidian"}, "south": {"texture": "#obsidian"},
+        "east": {"texture": "#obsidian"}, "west": {"texture": "#obsidian"},
+        "up": {"texture": "#obsidian"}, "down": {"texture": "#obsidian"}
       }
     },
     {
-      "name": "right upright",
-      "from": [
-        12,
-        2,
-        8
-      ],
-      "to": [
-        14,
-        13,
-        12
-      ],
+      "name": "left support",
+      "from": [2, 3, 6],
+      "to": [4, 9, 10],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        }
+        "north": {"texture": "#obsidian"}, "south": {"texture": "#obsidian"},
+        "east": {"texture": "#obsidian"}, "west": {"texture": "#obsidian"},
+        "up": {"texture": "#obsidian"}, "down": {"texture": "#obsidian"}
       }
     },
     {
-      "name": "lower housing",
-      "from": [
-        4,
-        5,
-        8
-      ],
-      "to": [
-        12,
-        6,
-        12
-      ],
+      "name": "right support",
+      "from": [12, 3, 6],
+      "to": [14, 9, 10],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        }
+        "north": {"texture": "#obsidian"}, "south": {"texture": "#obsidian"},
+        "east": {"texture": "#obsidian"}, "west": {"texture": "#obsidian"},
+        "up": {"texture": "#obsidian"}, "down": {"texture": "#obsidian"}
       }
     },
     {
-      "name": "standing housing",
-      "from": [
-        4,
-        6,
-        8
-      ],
-      "to": [
-        12,
-        14,
-        12
-      ],
+      "name": "wooden crossbeam",
+      "from": [2, 9, 6],
+      "to": [14, 11, 10],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#rune"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        }
+        "north": {"texture": "#wood"}, "south": {"texture": "#wood"},
+        "east": {"texture": "#wood"}, "west": {"texture": "#wood"},
+        "up": {"texture": "#wood"}, "down": {"texture": "#wood"}
       }
     },
     {
-      "name": "crown",
-      "from": [
-        4,
-        14,
-        8
-      ],
-      "to": [
-        12,
-        15,
-        12
-      ],
+      "name": "blackstone axle",
+      "from": [4, 11, 7],
+      "to": [12, 13, 9],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        }
+        "north": {"texture": "#stone"}, "south": {"texture": "#stone"},
+        "east": {"texture": "#stone"}, "west": {"texture": "#stone"},
+        "up": {"texture": "#stone"}, "down": {"texture": "#stone"}
       }
     },
     {
-      "name": "front rune plate",
-      "from": [
-        4,
-        6,
-        7.5
-      ],
-      "to": [
-        12,
-        14,
-        8
-      ],
+      "name": "lower crystal facet",
+      "from": [6, 8, 5],
+      "to": [10, 10, 11],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#rune"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#rune"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#rune"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#rune"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#rune"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#rune"
-        }
+        "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
+        "east": {"texture": "#crystal"}, "west": {"texture": "#crystal"},
+        "up": {"texture": "#crystal"}, "down": {"texture": "#crystal"}
       }
     },
     {
-      "name": "lens bezel",
-      "from": [
-        5,
-        8,
-        7
-      ],
-      "to": [
-        11,
-        12,
-        7.5
-      ],
+      "name": "crystal core",
+      "from": [5, 10, 5],
+      "to": [11, 14, 11],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        }
+        "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
+        "east": {"texture": "#crystal"}, "west": {"texture": "#crystal"},
+        "up": {"texture": "#crystal"}, "down": {"texture": "#crystal"}
       }
     },
     {
-      "name": "amethyst focus",
-      "from": [
-        6,
-        9,
-        6.5
-      ],
-      "to": [
-        10,
-        11,
-        7
-      ],
+      "name": "upper crystal facet",
+      "from": [6, 14, 5],
+      "to": [10, 16, 11],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#amethyst"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#amethyst"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#amethyst"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#amethyst"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#amethyst"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#amethyst"
-        }
+        "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
+        "east": {"texture": "#crystal"}, "west": {"texture": "#crystal"},
+        "up": {"texture": "#crystal"}, "down": {"texture": "#crystal"}
       }
     },
     {
-      "name": "working shelf",
-      "from": [
-        3,
-        4,
-        2
-      ],
-      "to": [
-        13,
-        5,
-        8
-      ],
+      "name": "work shelf",
+      "from": [3, 5, 1],
+      "to": [13, 7, 6],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#deck"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#trim"
-        }
+        "north": {"texture": "#wood"}, "south": {"texture": "#wood"},
+        "east": {"texture": "#wood"}, "west": {"texture": "#wood"},
+        "up": {"texture": "#wood"}, "down": {"texture": "#wood"}
       }
     },
     {
-      "name": "shelf support",
-      "from": [
-        6,
-        2,
-        5
-      ],
-      "to": [
-        10,
-        4,
-        8
-      ],
+      "name": "shelf pedestal",
+      "from": [6, 3, 4],
+      "to": [10, 5, 6],
       "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#obsidian"
-        }
+        "north": {"texture": "#stone"}, "south": {"texture": "#stone"},
+        "east": {"texture": "#stone"}, "west": {"texture": "#stone"},
+        "up": {"texture": "#stone"}, "down": {"texture": "#stone"}
+      }
+    },
+    {
+      "name": "rune inset",
+      "from": [6, 7, 4],
+      "to": [10, 8, 5],
+      "faces": {
+        "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
+        "east": {"texture": "#crystal"}, "west": {"texture": "#crystal"},
+        "up": {"texture": "#crystal"}, "down": {"texture": "#crystal"}
       }
     }
   ],
   "display": {
     "gui": {
-      "rotation": [
-        30,
-        135,
-        0
-      ],
-      "translation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        0.75,
-        0.75,
-        0.75
-      ]
+      "rotation": [30, 135, 0],
+      "translation": [0, 0, 0],
+      "scale": [0.78, 0.78, 0.78]
     },
     "ground": {
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "translation": [
-        0,
-        3,
-        0
-      ],
-      "scale": [
-        0.3,
-        0.3,
-        0.3
-      ]
+      "translation": [0, 3, 0],
+      "scale": [0.32, 0.32, 0.32]
     },
     "fixed": {
-      "rotation": [
-        0,
-        180,
-        0
-      ],
-      "translation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        0.6,
-        0.6,
-        0.6
-      ]
+      "rotation": [0, 180, 0],
+      "scale": [0.62, 0.62, 0.62]
     }
   }
 }
