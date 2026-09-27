@@ -9,19 +9,27 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneExtractorMenu> {
-    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(
-            "arcane_extraction", "textures/gui/arcane_extractor.png");
     private static final int LIST_X = 11;
     private static final int LIST_Y = 70;
     private static final int LIST_WIDTH = 84;
     private static final int ROW_HEIGHT = 12;
     private static final int ROWS_PER_PAGE = 4;
+
+    private static final int WOOD_DARK = 0xFF2A180F;
+    private static final int WOOD = 0xFF4A2B1B;
+    private static final int WOOD_LIGHT = 0xFF6B4329;
+    private static final int BLACKSTONE = 0xFF272329;
+    private static final int BLACKSTONE_LIGHT = 0xFF514A53;
+    private static final int PARCHMENT = 0xFFD7C69A;
+    private static final int PARCHMENT_DARK = 0xFFB29B6D;
+    private static final int INK = 0xFF2B2118;
+    private static final int AMETHYST = 0xFF9D6CC5;
+    private static final int AMETHYST_LIGHT = 0xFFD9B7F2;
 
     private String selectedEnchantmentId;
     private int pageStart = 0;
@@ -127,17 +135,87 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
-        graphics.blit(BACKGROUND, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+        int x = leftPos;
+        int y = topPos;
+
+        // Carved dark-oak outer frame.
+        graphics.fill(x, y, x + imageWidth, y + imageHeight, WOOD_DARK);
+        graphics.fill(x + 2, y + 2, x + imageWidth - 2, y + imageHeight - 2, WOOD_LIGHT);
+        graphics.fill(x + 4, y + 4, x + imageWidth - 4, y + imageHeight - 4, WOOD);
+
+        // Amethyst corner inlays and title rail.
+        graphics.fill(x + 6, y + 6, x + 10, y + 10, AMETHYST);
+        graphics.fill(x + imageWidth - 10, y + 6, x + imageWidth - 6, y + 10, AMETHYST);
+        graphics.fill(x + 10, y + 11, x + imageWidth - 10, y + 13, WOOD_DARK);
+        graphics.fill(x + 14, y + 12, x + imageWidth - 14, y + 13, AMETHYST);
+
+        // Work area: parchment ledger left, dark output altar right.
+        drawParchmentPanel(graphics, x + 7, y + 18, x + 99, y + 136);
+        drawStonePanel(graphics, x + 101, y + 18, x + 169, y + 136);
+
+        // Enchantment ledger inset.
+        graphics.fill(x + 8, y + 64, x + 98, y + 123, PARCHMENT_DARK);
+        graphics.fill(x + 10, y + 66, x + 96, y + 121, PARCHMENT);
+
+        // Decorative rune divider.
+        graphics.fill(x + 99, y + 24, x + 101, y + 132, WOOD_DARK);
+        graphics.fill(x + 100, y + 38, x + 101, y + 50, AMETHYST);
+        graphics.fill(x + 100, y + 82, x + 101, y + 94, AMETHYST);
+
+        // Machine slots.
+        drawSlotFrame(graphics, x + 19, y + 34);
+        drawSlotFrame(graphics, x + 55, y + 34);
+        for (int index = 0; index < 6; index++) {
+            int column = index % 3;
+            int row = index / 3;
+            drawSlotFrame(graphics, x + 115 + column * 18, y + 25 + row * 18);
+        }
+
+        // Arcane transfer marks.
+        graphics.fill(x + 42, y + 41, x + 49, y + 43, AMETHYST);
+        graphics.fill(x + 47, y + 39, x + 50, y + 45, AMETHYST_LIGHT);
+        graphics.fill(x + 78, y + 41, x + 105, y + 43, AMETHYST);
+        graphics.fill(x + 102, y + 39, x + 106, y + 45, AMETHYST_LIGHT);
+
+        // Inventory parchment tray.
+        drawParchmentPanel(graphics, x + 5, y + 145, x + 171, y + 229);
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 9; column++) {
+                drawSlotFrame(graphics, x + 7 + column * 18, y + 150 + row * 18);
+            }
+        }
+        for (int column = 0; column < 9; column++) {
+            drawSlotFrame(graphics, x + 7 + column * 18, y + 208);
+        }
+    }
+
+    private void drawParchmentPanel(GuiGraphics graphics, int left, int top, int right, int bottom) {
+        graphics.fill(left, top, right, bottom, WOOD_DARK);
+        graphics.fill(left + 1, top + 1, right - 1, bottom - 1, PARCHMENT_DARK);
+        graphics.fill(left + 3, top + 3, right - 3, bottom - 3, PARCHMENT);
+    }
+
+    private void drawStonePanel(GuiGraphics graphics, int left, int top, int right, int bottom) {
+        graphics.fill(left, top, right, bottom, WOOD_DARK);
+        graphics.fill(left + 1, top + 1, right - 1, bottom - 1, BLACKSTONE_LIGHT);
+        graphics.fill(left + 3, top + 3, right - 3, bottom - 3, BLACKSTONE);
+    }
+
+    private void drawSlotFrame(GuiGraphics graphics, int x, int y) {
+        graphics.fill(x, y, x + 18, y + 18, WOOD_DARK);
+        graphics.fill(x + 1, y + 1, x + 17, y + 17, BLACKSTONE_LIGHT);
+        graphics.fill(x + 2, y + 2, x + 16, y + 16, 0xFF171419);
+        graphics.fill(x + 2, y + 2, x + 15, y + 3, 0xFF665A68);
     }
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(font, title, titleLabelX, titleLabelY, 0xFFE8DFF2, false);
-        graphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0xFFD0C7DA, false);
-        graphics.drawString(font, Component.translatable("screen.arcane_extraction.source"), 13, 24, 0xFFC7B6D5, false);
-        graphics.drawString(font, Component.translatable("screen.arcane_extraction.books"), 53, 24, 0xFFC7B6D5, false);
-        graphics.drawString(font, Component.translatable("screen.arcane_extraction.output"), 116, 15, 0xFFC7B6D5, false);
-        graphics.drawString(font, Component.translatable("screen.arcane_extraction.enchantments"), 9, 57, 0xFFDDC8ED, false);
+        graphics.drawString(font, title, titleLabelX, titleLabelY, 0xFFF0DDB1, false);
+        graphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, INK, false);
+        graphics.drawString(font, Component.translatable("screen.arcane_extraction.source"), 13, 24, INK, false);
+        graphics.drawString(font, Component.translatable("screen.arcane_extraction.books"), 53, 24, INK, false);
+        graphics.drawString(font, Component.translatable("screen.arcane_extraction.output"), 116, 15, 0xFFE8D6F2, false);
+        graphics.drawString(font, Component.translatable("screen.arcane_extraction.enchantments"), 9, 57, INK, false);
 
         List<ExtractionCandidate> candidates = menu.candidates();
         int end = Math.min(candidates.size(), pageStart + ROWS_PER_PAGE);
@@ -149,21 +227,20 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
             String candidateId = registryId(candidate);
 
             if (!candidateId.isEmpty() && candidateId.equals(selectedEnchantmentId)) {
-                graphics.fill(LIST_X - 2, y - 1, LIST_X + LIST_WIDTH, y + 10, 0xFF604879);
-                graphics.fill(LIST_X - 2, y - 1, LIST_X - 1, y + 10, 0xFFEBC9FF);
+                graphics.fill(LIST_X - 2, y - 1, LIST_X + LIST_WIDTH, y + 10, 0xFFB79ACB);
+                graphics.fill(LIST_X - 2, y - 1, LIST_X, y + 10, AMETHYST);
             }
 
             Component name = Enchantment.getFullname(candidate.enchantment(), candidate.level());
-            // Keep the styled name (including curse color), with the full text in a tooltip.
             graphics.enableScissor(leftPos + LIST_X, topPos + y,
                     leftPos + LIST_X + LIST_WIDTH, topPos + y + 10);
-            graphics.drawString(font, name, LIST_X, y, 0xFFE9E0F2, false);
+            graphics.drawString(font, name, LIST_X, y, INK, false);
             graphics.disableScissor();
         }
 
         if (candidates.isEmpty()) {
             graphics.drawWordWrap(font, Component.translatable("screen.arcane_extraction.no_enchantments"),
-                    LIST_X, LIST_Y, LIST_WIDTH, 0xFFB6A7C3);
+                    LIST_X, LIST_Y, LIST_WIDTH, 0xFF6B5841);
         }
 
         if (candidates.size() > ROWS_PER_PAGE) {
@@ -174,7 +251,7 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
                     Component.translatable("screen.arcane_extraction.page", page, pages),
                     LIST_X,
                     125,
-                    0xFFAFA2BC,
+                    0xFF66533D,
                     false);
         }
 
