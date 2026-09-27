@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+### M7.2 — Visual polish — 2026-09-27
+
+#### Changed
+- Widened the Arcane Extractor GUI from 176 to 204 pixels to reduce crowding.
+- Increased separation between Source and Books, widened the enchantment ledger, and gave the output/actions their own roomier column.
+- Re-centered the player inventory beneath the wider workstation interface.
+- Kept all eight machine slots and 36 player slots functionally identical while moving only their screen coordinates.
+- Thickened the amethyst core/support depth and added a short rear dark-oak brace so the workstation has a stronger side silhouette.
+- Updated collision geometry to match the revised block model.
+
+#### Why
+Owner visual testing approved the medieval-magic theme but found the GUI cramped and the block side profile too thin. M7.2 is a focused spacing/silhouette pass with no gameplay changes.
+
+#### Validation
+- Existing visual tests continue to compare model geometry against collision/outline geometry for all four facings.
+- Existing M1–M6 tests remain the gameplay regression gate.
+- Final acceptance requires a local visual pass at the owner's normal GUI scale.
+
+#### Next
+Run the M7.2 visual acceptance pass. If accepted, freeze visuals and prepare v1.0.0.
+
 ### M7.1 — Medieval Magic Retheme — 2026-09-27
 
 #### Changed

@@ -183,6 +183,27 @@ Exit criteria:
 - M6 live behavior remains unchanged.
 - Owner accepts the medieval-magic visual direction in the intended modpack.
 
+## M7.2 — Visual polish
+
+Status: **implemented; PR CI and owner visual acceptance pending**.
+
+Scope:
+- Widen GUI to 204 pixels for more breathing room.
+- Separate Source/Books labels and slots.
+- Widen enchantment ledger.
+- Expand output/action column.
+- Re-center player inventory.
+- Strengthen block side silhouette with deeper supports/crystal and a rear wooden brace.
+- Preserve every M6 gameplay/network/inventory contract.
+
+Exit criteria:
+- `./gradlew build` succeeds.
+- All machine/player slots align with the widened visual frames.
+- GUI no longer reads as cramped at the owner's normal GUI scale.
+- Model and collision/outline geometry agree for all four facings.
+- Side profile reads as a balanced workstation rather than a thin slab.
+- M6 extraction, Extract All, automation, persistence, and networking remain unchanged.
+
 ## v1.0.0
 
 Exit criteria:

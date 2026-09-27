@@ -11,8 +11,8 @@
   "elements": [
     {
       "name": "left foot",
-      "from": [1, 0, 5],
-      "to": [4, 3, 11],
+      "from": [1, 0, 4],
+      "to": [4, 3, 12],
       "faces": {
         "north": {"texture": "#obsidian"}, "south": {"texture": "#obsidian"},
         "east": {"texture": "#obsidian"}, "west": {"texture": "#obsidian"},
@@ -21,8 +21,8 @@
     },
     {
       "name": "right foot",
-      "from": [12, 0, 5],
-      "to": [15, 3, 11],
+      "from": [12, 0, 4],
+      "to": [15, 3, 12],
       "faces": {
         "north": {"texture": "#obsidian"}, "south": {"texture": "#obsidian"},
         "east": {"texture": "#obsidian"}, "west": {"texture": "#obsidian"},
@@ -31,8 +31,8 @@
     },
     {
       "name": "left support",
-      "from": [2, 3, 6],
-      "to": [4, 9, 10],
+      "from": [2, 3, 5],
+      "to": [4, 9, 11],
       "faces": {
         "north": {"texture": "#obsidian"}, "south": {"texture": "#obsidian"},
         "east": {"texture": "#obsidian"}, "west": {"texture": "#obsidian"},
@@ -41,8 +41,8 @@
     },
     {
       "name": "right support",
-      "from": [12, 3, 6],
-      "to": [14, 9, 10],
+      "from": [12, 3, 5],
+      "to": [14, 9, 11],
       "faces": {
         "north": {"texture": "#obsidian"}, "south": {"texture": "#obsidian"},
         "east": {"texture": "#obsidian"}, "west": {"texture": "#obsidian"},
@@ -51,8 +51,8 @@
     },
     {
       "name": "wooden crossbeam",
-      "from": [2, 9, 6],
-      "to": [14, 11, 10],
+      "from": [2, 9, 5],
+      "to": [14, 11, 11],
       "faces": {
         "north": {"texture": "#wood"}, "south": {"texture": "#wood"},
         "east": {"texture": "#wood"}, "west": {"texture": "#wood"},
@@ -61,8 +61,8 @@
     },
     {
       "name": "blackstone axle",
-      "from": [4, 11, 7],
-      "to": [12, 13, 9],
+      "from": [4, 11, 6],
+      "to": [12, 13, 10],
       "faces": {
         "north": {"texture": "#stone"}, "south": {"texture": "#stone"},
         "east": {"texture": "#stone"}, "west": {"texture": "#stone"},
@@ -71,8 +71,8 @@
     },
     {
       "name": "lower crystal facet",
-      "from": [6, 8, 5],
-      "to": [10, 10, 11],
+      "from": [6, 8, 4],
+      "to": [10, 10, 12],
       "faces": {
         "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
         "east": {"texture": "#crystal"}, "west": {"texture": "#crystal"},
@@ -81,8 +81,8 @@
     },
     {
       "name": "crystal core",
-      "from": [5, 10, 5],
-      "to": [11, 14, 11],
+      "from": [5, 10, 4],
+      "to": [11, 14, 12],
       "faces": {
         "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
         "east": {"texture": "#crystal"}, "west": {"texture": "#crystal"},
@@ -91,8 +91,8 @@
     },
     {
       "name": "upper crystal facet",
-      "from": [6, 14, 5],
-      "to": [10, 16, 11],
+      "from": [6, 14, 4],
+      "to": [10, 16, 12],
       "faces": {
         "north": {"texture": "#crystal"}, "south": {"texture": "#crystal"},
         "east": {"texture": "#crystal"}, "west": {"texture": "#crystal"},
@@ -117,6 +117,16 @@
         "north": {"texture": "#stone"}, "south": {"texture": "#stone"},
         "east": {"texture": "#stone"}, "west": {"texture": "#stone"},
         "up": {"texture": "#stone"}, "down": {"texture": "#stone"}
+      }
+    },
+    {
+      "name": "rear wooden brace",
+      "from": [4, 5, 11],
+      "to": [12, 7, 14],
+      "faces": {
+        "north": {"texture": "#wood"}, "south": {"texture": "#wood"},
+        "east": {"texture": "#wood"}, "west": {"texture": "#wood"},
+        "up": {"texture": "#wood"}, "down": {"texture": "#wood"}
       }
     },
     {
