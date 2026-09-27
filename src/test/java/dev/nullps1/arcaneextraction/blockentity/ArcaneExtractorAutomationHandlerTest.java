@@ -40,12 +40,12 @@ class ArcaneExtractorAutomationHandlerTest {
         ItemStack attempted = new ItemStack(Items.ENCHANTED_BOOK);
 
         ItemStack remainder = automation.insertItem(
-                ArcaneExtractorInventory.OUTPUT_SLOT,
+                ArcaneExtractorInventory.OUTPUT_START,
                 attempted,
                 false);
 
         assertEquals(1, remainder.getCount());
-        assertTrue(inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_SLOT).isEmpty());
+        assertTrue(inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_START).isEmpty());
     }
 
     @Test
@@ -69,16 +69,29 @@ class ArcaneExtractorAutomationHandlerTest {
         ArcaneExtractorInventory inventory = new ArcaneExtractorInventory(() -> {});
         ArcaneExtractorAutomationHandler automation = new ArcaneExtractorAutomationHandler(inventory);
         inventory.setStackInSlot(
-                ArcaneExtractorInventory.OUTPUT_SLOT,
+                ArcaneExtractorInventory.OUTPUT_START,
                 new ItemStack(Items.ENCHANTED_BOOK));
 
         ItemStack extracted = automation.extractItem(
-                ArcaneExtractorInventory.OUTPUT_SLOT,
+                ArcaneExtractorInventory.OUTPUT_START,
                 1,
                 false);
 
         assertTrue(extracted.is(Items.ENCHANTED_BOOK));
-        assertTrue(inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_SLOT).isEmpty());
+        assertTrue(inventory.getStackInSlot(ArcaneExtractorInventory.OUTPUT_START).isEmpty());
+    }
+
+    @Test
+    void automationCanExtractFromAnyBufferedOutputSlot() {
+        ArcaneExtractorInventory inventory = new ArcaneExtractorInventory(() -> {});
+        ArcaneExtractorAutomationHandler automation = new ArcaneExtractorAutomationHandler(inventory);
+        int lastOutput = ArcaneExtractorInventory.OUTPUT_END - 1;
+        inventory.setStackInSlot(lastOutput, new ItemStack(Items.ENCHANTED_BOOK));
+
+        ItemStack extracted = automation.extractItem(lastOutput, 1, false);
+
+        assertTrue(extracted.is(Items.ENCHANTED_BOOK));
+        assertTrue(inventory.getStackInSlot(lastOutput).isEmpty());
     }
 
     @Test
