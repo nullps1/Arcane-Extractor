@@ -24,6 +24,10 @@ sourceSets.main.resources {
     exclude('src/generated/**/.cache')
 }
 
+repositories {
+    mavenCentral()
+}
+
 neoForge {
     version = project.neo_version
 
@@ -70,6 +74,8 @@ configurations {
 }
 
 dependencies {
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
