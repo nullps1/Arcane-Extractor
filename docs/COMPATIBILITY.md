@@ -15,12 +15,15 @@ The extractor does not maintain:
 
 If an enchantment exists in the source item's ordinary enchantment component, Arcane Extraction treats it as a candidate and preserves its stored integer level exactly.
 
+A successful extraction intentionally clears the source item's anvil prior-work penalty (`DataComponents.REPAIR_COST`). This prevents repeated extract/re-enchant cycles from inheriting an ever-growing anvil cost. Failed extraction attempts do not alter the repair cost.
+
 ## Automated M5 coverage
 
 The test suite verifies:
 - arbitrary synthetic/data-driven enchantments require no hardcoded ID;
 - levels above an enchantment's declared normal maximum are preserved exactly;
-- custom name, damage, and repair-cost components survive extraction;
+- custom name and damage survive extraction;
+- anvil prior-work penalty (`REPAIR_COST`) is intentionally reset after a successful extraction;
 - external automation may insert valid source items and ordinary books;
 - external automation cannot insert directly into the output;
 - external automation cannot extract source items or input books;
