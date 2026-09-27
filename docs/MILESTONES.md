@@ -13,7 +13,7 @@ Scope:
 
 ## M1 — Extraction engine
 
-Status: **implemented; PR CI validation pending**.
+Status: **complete**.
 
 Scope:
 - Read enchantments from a source `ItemStack`.
@@ -34,12 +34,24 @@ Exit criteria:
 
 ## M2 — Arcane Extractor block
 
+Status: **implemented; PR CI validation pending**.
+
 Scope:
 - Block + block item.
 - Block entity.
 - Source/book/output inventory contract.
-- Persistence.
+- NBT persistence.
+- NeoForge item-handler capability exposure.
 - Server-owned extraction execution.
+- Focused transaction tests.
+
+Exit criteria:
+- `./gradlew build` succeeds.
+- Block and block entity register cleanly.
+- Inventory persists through the block entity's NBT lifecycle.
+- A successful transaction consumes exactly one book and writes exactly one enchanted-book output.
+- Missing book or occupied output causes no partial mutation.
+- Output slot rejects insertion.
 
 ## M3 — Menu and GUI
 
