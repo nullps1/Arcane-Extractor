@@ -95,7 +95,7 @@ With two players:
 - [ ] with Sharpness and Mending on the same item, selecting either one extracts that exact enchantment for both players;
 - [ ] Extract All under two-player observation produces no duplicate books or enchantments.
 
-## Gate J — M7 visual acceptance
+## Gate J — M7.1 medieval visual acceptance
 
 - [ ] Place from each horizontal direction; the input shelf and crystal face the player.
 - [ ] Check outline/collision around the base, shelf, sides, top, and open space under the housing.
@@ -106,7 +106,7 @@ With two players:
 - [ ] Check empty source, long vanilla/modded names, curse color, selection marker, full-name tooltips, both pages, and enabled/disabled/hover/focused buttons.
 - [ ] Repeat exact single extraction and Extract All, including six filled outputs and missing books.
 - [ ] Save/reload and repeat two-player interaction and installed hopper/pipe checks with the M7 artifact.
-- [ ] Accept the final workstation/GUI appearance before tagging v1.0.0.
+- [ ] Confirm the block reads as a medieval magical grindstone/workstation rather than an industrial machine, then accept the final workstation/GUI appearance before tagging v1.0.0.
 
 ## Release gate
 
