@@ -30,6 +30,26 @@ sh ./gradlew build
 - An unenchanted source returns `SOURCE_NOT_ENCHANTED`.
 - An empty source returns `EMPTY_SOURCE`.
 
+## M2 automated coverage
+
+`ArcaneExtractorTransactionTest` verifies:
+
+- A successful transaction consumes exactly one ordinary book.
+- The cleaned source remains in the source slot.
+- The selected enchantment appears at the exact level in the output enchanted book.
+- Missing-book rejection leaves the source and output unchanged.
+- Occupied-output rejection does not consume a book or modify the source.
+- Source, book, and output insertion rules match the machine contract.
+
+## M2 runtime checks
+
+Before merging/releasing M2, place an Arcane Extractor in a development world and verify:
+
+- the block renders and creates its block entity;
+- inventory survives save/reload;
+- the item-handler capability is discoverable server-side;
+- no client-only class is loaded on a dedicated server.
+
 ## Runtime smoke tests
 
 Before a release:
