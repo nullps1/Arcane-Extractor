@@ -63,6 +63,18 @@ In a development client connected to a logical server:
 7. Change/remove the source before a stale selection can be acted upon and confirm the server rejects an invalid index without partial mutation.
 8. Start `runServer` and verify no client-only M3 classes are loaded on the dedicated server.
 
+## M4 runtime checks
+
+In a survival or development world:
+
+1. Obtain an enchanting table or amethyst shard and confirm the Arcane Extractor recipe becomes discoverable.
+2. Craft the machine with 4 crying obsidian, 4 amethyst shards, and 1 enchanting table.
+3. Confirm it requires a diamond-tier pickaxe for correct harvesting.
+4. Break an empty machine and confirm it drops itself.
+5. Put items into all three machine slots, break the block, and confirm every stored stack is dropped.
+6. Complete one extraction and confirm the enchanting-table sound and enchant particles play once.
+7. Verify the machine remains available in the Functional Blocks creative tab.
+
 ## Runtime smoke tests
 
 Before a release:
