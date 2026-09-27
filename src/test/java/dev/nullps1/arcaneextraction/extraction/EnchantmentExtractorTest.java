@@ -2,7 +2,6 @@ package dev.nullps1.arcaneextraction.extraction;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -145,7 +144,7 @@ class EnchantmentExtractorTest {
     }
 
     @Test
-    void unrelatedComponentsSurviveCompatibilityExtraction() {
+    void unrelatedComponentsSurviveCompatibilityExtractionExceptRepairCost() {
         Holder<Enchantment> modded = testEnchantment("modded:oddity", 1);
 
         ItemStack source = new ItemStack(Items.DIAMOND_PICKAXE);
@@ -159,8 +158,26 @@ class EnchantmentExtractorTest {
                 EnchantmentExtractor.extract(source, modded));
 
         assertEquals(Component.literal("Component Soup"), success.source().get(DataComponents.CUSTOM_NAME));
-        assertEquals(19, success.source().getOrDefault(DataComponents.REPAIR_COST, 0));
+        assertEquals(0, success.source().getOrDefault(DataComponents.REPAIR_COST, 0));
         assertEquals(77, success.source().getOrDefault(DataComponents.DAMAGE, 0));
+        assertEquals(19, source.getOrDefault(DataComponents.REPAIR_COST, 0));
+    }
+
+    @Test
+    void failedExtractionDoesNotResetRepairCost() {
+        Holder<Enchantment> present = testEnchantment("present", 1);
+        Holder<Enchantment> missing = testEnchantment("missing", 1);
+
+        ItemStack source = new ItemStack(Items.DIAMOND_PICKAXE);
+        source.enchant(present, 1);
+        source.set(DataComponents.REPAIR_COST, 37);
+
+        ExtractionResult.Failure failure = assertInstanceOf(
+                ExtractionResult.Failure.class,
+                EnchantmentExtractor.extract(source, missing));
+
+        assertEquals(ExtractionFailure.ENCHANTMENT_NOT_PRESENT, failure.reason());
+        assertEquals(37, source.getOrDefault(DataComponents.REPAIR_COST, 0));
     }
 
     @Test

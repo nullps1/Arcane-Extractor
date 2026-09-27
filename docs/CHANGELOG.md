@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Pre-v1 repair-cost regression fix — 2026-09-27
+
+#### Changed
+- Successful extraction now clears `DataComponents.REPAIR_COST` on the returned source item.
+- Failed extraction attempts preserve the original repair cost.
+- Updated compatibility tests and documentation to reflect the intended anvil prior-work reset.
+
+#### Why
+Live Minecraft testing showed that preserving the source item's prior-work penalty caused anvil costs to grow to extreme values after stripping and reapplying enchantments. Resetting the penalty on successful extraction keeps the machine's "rework" behavior usable without affecting failed requests or unrelated item state.
+
+#### Validation
+- Added regression coverage for repair-cost reset on success.
+- Added regression coverage proving failed extraction does not reset repair cost.
+- PR CI is the clean-environment validation gate before merge.
+
 ### M5 — 2026-09-27
 
 #### Changed
