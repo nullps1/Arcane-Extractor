@@ -37,6 +37,6 @@ NeoForge deferred registrations.
 
 `ArcaneExtractorBlock` owns horizontal facing and the static collision/outline shapes. The JSON model and original PNGs use ordinary baked block rendering. `noOcclusion` prevents the open stand from hiding neighboring faces. The registered block/block-entity/item/menu IDs and inventory NBT are unchanged; a pre-M7 state with no facing uses the north default.
 
-`ArcaneExtractorScreen` reads the same M6 menu and sends the same registry-ID/all payloads. Its 176x233 procedural medieval UI preserves every slot position while drawing the carved-wood, parchment, blackstone, and amethyst presentation at render time. `ArcaneButton` changes painting only and inherits vanilla button interaction/narration. All rendering imports remain in the client package.
+`ArcaneExtractorScreen` reads the same M6 menu and sends the same registry-ID/all payloads. Its 204x233 procedural medieval UI preserves the M6 slot identities while using roomier screen coordinates while drawing the carved-wood, parchment, blackstone, and amethyst presentation at render time. `ArcaneButton` changes painting only and inherits vanilla button interaction/narration. All rendering imports remain in the client package.
 
 The successful extraction repair-cost reset is the intentional exception to unrelated-component preservation in invariant 5; failures preserve it.
