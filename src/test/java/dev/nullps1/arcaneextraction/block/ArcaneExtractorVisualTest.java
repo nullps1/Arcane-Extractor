@@ -116,6 +116,22 @@ class ArcaneExtractorVisualTest {
                 assertTrue(textures.has(reference.substring(1)), reference);
             }
         }
+        // Joined cuboids may touch, but overlapping volumes produce coplanar faces that flicker.
+        var elements = model.getAsJsonArray("elements");
+        for (int i = 0; i < elements.size(); i++) {
+            for (int j = i + 1; j < elements.size(); j++) {
+                var a = elements.get(i).getAsJsonObject();
+                var b = elements.get(j).getAsJsonObject();
+                boolean overlap = true;
+                for (int axis = 0; axis < 3; axis++) {
+                    overlap &= Math.min(a.getAsJsonArray("to").get(axis).getAsDouble(),
+                            b.getAsJsonArray("to").get(axis).getAsDouble())
+                            > Math.max(a.getAsJsonArray("from").get(axis).getAsDouble(),
+                            b.getAsJsonArray("from").get(axis).getAsDouble());
+                }
+                assertFalse(overlap, "Overlapping model elements " + i + " and " + j);
+            }
+        }
         assertEquals("arcane_extraction:block/arcane_extractor",
                 json("models/item/arcane_extractor.json").get("parent").getAsString());
         try (var stream = resource("textures/gui/arcane_extractor.png")) {

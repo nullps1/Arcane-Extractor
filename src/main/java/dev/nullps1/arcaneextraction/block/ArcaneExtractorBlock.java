@@ -37,7 +37,7 @@ public final class ArcaneExtractorBlock extends BaseEntityBlock {
     private static final VoxelShape NORTH_SHAPE = Shapes.or(
             Block.box(1, 0, 2, 15, 2, 14),
             Block.box(2, 2, 8, 4, 13, 12), Block.box(12, 2, 8, 14, 13, 12),
-            Block.box(4, 5, 8, 12, 6, 12), Block.box(3, 6, 8, 13, 14, 12),
+            Block.box(4, 5, 8, 12, 6, 12), Block.box(4, 6, 8, 12, 14, 12),
             Block.box(4, 14, 8, 12, 15, 12), Block.box(4, 6, 7.5, 12, 14, 8),
             Block.box(5, 8, 7, 11, 12, 7.5), Block.box(6, 9, 6.5, 10, 11, 7),
             Block.box(3, 4, 2, 13, 5, 8), Block.box(6, 2, 5, 10, 4, 8));

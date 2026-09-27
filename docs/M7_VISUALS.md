@@ -21,12 +21,12 @@ The GUI uses an original 256x256 atlas with a 176x233 visible region. Source/boo
 Environment: Minecraft 1.21.1, NeoForge 21.1.252, Java 21.0.12.1, Windows 11, NVIDIA GTX 1050; no external mods or resource packs.
 
 - `gradlew build` passed: **25 tests, zero failures**, including the unchanged M1–M6 regression suite and four M7 resource/shape/save-state tests.
-- M7 tests compare all four rendered model rotations with outline/collision shapes, verify rotation/mirroring, deserialize an old block palette without facing, round-trip current facings, and check texture references, PNG sizes, item inheritance, and GUI atlas opacity.
+- M7 tests compare all four rendered model rotations with outline/collision shapes, verify rotation/mirroring, deserialize an old block palette without facing, round-trip current facings, and check texture references, PNG sizes, item inheritance, non-overlapping model elements, and GUI atlas opacity.
 - A temporary development-only harness created a fresh flat integrated-server world and captured the actual client at 1280x960, GUI scale 2. It opened the real menu, populated six enchantments/books, selected a row, paged, and clicked Extract then Extract All through the screen. The server confirmed all six output slots contained enchanted books and no input books remained. This is a visual/interaction smoke test, not a substitute for exact-ID and modpack/multiplayer acceptance.
 - The harness is excluded from the final mod JAR. Screenshots below are actual Minecraft renders, not concept mockups.
 - Dedicated-server smoke: `runServer` reached `Done` on a local-only development server, with no client-class linkage failures.
 - Final JAR inspection confirmed all six PNGs plus model/blockstates are packaged, with no development harness classes. Regenerating the assets produced byte-for-byte identical resources.
-- Local artifact: `build/libs/arcane_extraction-0.1.0-SNAPSHOT.jar`, SHA-256 `53446c3be25377c88d06986d8fe4b615b8defaa0fe801d17cb4408c429b531e7`. This hash identifies the local Windows build, not a claim that a separate CI build has identical bytes.
+- Local artifact: `build/libs/arcane_extraction-0.1.0-SNAPSHOT.jar`, SHA-256 `a3e822d3f2bdc7fce40d3235f9a4ef2655ed86735b5ff7a8cd39711c7f63d753`. This hash identifies the local Windows build, not a claim that a separate CI build has identical bytes.
 
 ![Workstation in four directions](images/m7-workstation-four-facings.png)
 ![Empty GUI](images/m7-gui-empty.png)
