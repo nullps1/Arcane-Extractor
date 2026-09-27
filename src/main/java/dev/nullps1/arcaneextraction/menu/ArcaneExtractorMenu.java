@@ -16,7 +16,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public final class ArcaneExtractorMenu extends AbstractContainerMenu {
@@ -77,12 +76,12 @@ public final class ArcaneExtractorMenu extends AbstractContainerMenu {
                         playerInventory,
                         column + row * 9 + 9,
                         8 + column * 18,
-                        104 + row * 18));
+                        128 + row * 18));
             }
         }
 
         for (int column = 0; column < 9; column++) {
-            addSlot(new Slot(playerInventory, column, 8 + column * 18, 162));
+            addSlot(new Slot(playerInventory, column, 8 + column * 18, 186));
         }
     }
 
