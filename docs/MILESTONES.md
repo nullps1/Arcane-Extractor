@@ -98,7 +98,7 @@ Exit criteria:
 
 ## M5 — Compatibility hardening
 
-Status: **complete; live Minecraft release-gate testing remains**.
+Status: **complete; owner reported the M5/M6 live checklist passed on 2026-09-27**. Exact modpack versions and test evidence were not recorded in this repository; retain the release checklist for the final build.
 
 Scope:
 - Generic/data-driven enchantment regression coverage.
@@ -119,7 +119,7 @@ Exit criteria:
 
 ## M6 — Interaction hardening
 
-Status: **implemented; PR CI and renewed live Minecraft validation pending**.
+Status: **complete; owner reported live Minecraft testing passed on 2026-09-27**. M7 must preserve this behavior and receive its own visual acceptance.
 
 Scope:
 - Exact enchantment registry-ID selection over a serverbound payload.
@@ -140,6 +140,27 @@ Exit criteria:
 - Extract All stops safely on no candidates, no books, or no output capacity.
 - Automation can extract from every output slot but still cannot pull source/input stacks.
 - Dedicated-server and two-player live checks pass.
+
+## M7 — Visual release
+
+Status: **implemented; final owner visual/modpack acceptance pending**.
+
+Scope:
+- Original obsidian/amethyst workstation model and five 16x16 material textures.
+- Four horizontal facings with matching outline/collision and non-occluding rendering.
+- Existing blocks default north when the saved state has no facing; registry IDs and inventory format remain unchanged.
+- Original pixel GUI background, inset inventory/output slots, framed enchantment ledger, themed action buttons, selection marker, and full-name hover tooltips.
+- Preserve M6 menu slots, payloads, extraction, automation, persistence, recipe, drops, sound, and particles.
+- Automated resource/model/shape checks plus the M6 regression suite.
+
+Exit criteria:
+- Build/tests and packaged asset checks pass.
+- Actual client displays the model and GUI without missing textures or overlapping controls.
+- Empty, selected, paged, and full-output GUI states are verified.
+- Dedicated server starts without client class linkage failures.
+- Owner accepts the final look and completes the M7 checklist in the intended modpack.
+
+See [M7_VISUALS.md](M7_VISUALS.md) for evidence and explicit remaining checks.
 
 ## v1.0.0
 

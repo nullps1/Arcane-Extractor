@@ -18,6 +18,7 @@ public final class ModBlocks {
                     ArcaneExtractorBlock::new,
                     BlockBehaviour.Properties.of()
                             .mapColor(MapColor.COLOR_PURPLE)
+                            .noOcclusion()
                             .strength(3.5F)
                             .requiresCorrectToolForDrops());
 

@@ -2,6 +2,8 @@
 
 Run this checklist on the exact NeoForge 1.21.1 client/server pack intended for release.
 
+The owner reported the M6 checklist passed on 2026-09-27. These boxes remain a reusable checklist for the final artifact, not a claim that every case was rerun during M7. Record the actual pack versions and artifact hash with the final acceptance.
+
 ## Gate A — install and startup
 
 - [ ] Client starts with Arcane Extraction installed.
@@ -92,6 +94,19 @@ With two players:
 - [ ] removing/changing the source while another player has a selection does not produce a stale extraction;
 - [ ] with Sharpness and Mending on the same item, selecting either one extracts that exact enchantment for both players;
 - [ ] Extract All under two-player observation produces no duplicate books or enchantments.
+
+## Gate J — M7 visual acceptance
+
+- [ ] Place from each horizontal direction; the input shelf and crystal face the player.
+- [ ] Check outline/collision around the base, shelf, sides, top, and open space under the housing.
+- [ ] Check adjacent solid blocks, daylight, darkness, and normal resource-pack lighting for missing faces/textures.
+- [ ] Check the block item in inventory, hand, on the ground, and in an item frame.
+- [ ] Load a pre-M7 machine: it faces north and all eight inventory slots survive; rotate a structure and verify facing.
+- [ ] Open the GUI at supported GUI scales/window sizes; all 44 slots align with their frames.
+- [ ] Check empty source, long vanilla/modded names, curse color, selection marker, full-name tooltips, both pages, and enabled/disabled/hover/focused buttons.
+- [ ] Repeat exact single extraction and Extract All, including six filled outputs and missing books.
+- [ ] Save/reload and repeat two-player interaction and installed hopper/pipe checks with the M7 artifact.
+- [ ] Accept the final workstation/GUI appearance before tagging v1.0.0.
 
 ## Release gate
 
