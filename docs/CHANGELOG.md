@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+### M2 — 2026-09-27
+
+#### Changed
+- Added the Arcane Extractor block and block item.
+- Added the Arcane Extractor block entity with a persistent 3-slot `ItemStackHandler`.
+- Added NeoForge item-handler capability exposure for automation compatibility.
+- Added source/book/output slot validation.
+- Added a server-owned extraction transaction that consumes exactly one book, replaces the source with the cleaned copy, and writes the enchanted-book output only after all preconditions pass.
+- Added placeholder block/item models using vanilla crying obsidian so the block is renderable before custom art lands.
+- Added focused M2 unit tests for success, missing-book rejection, occupied-output rejection, and slot rules.
+
+#### Why
+M2 turns the already-tested extraction engine into a persistent world machine without mixing in menu, networking, or client-screen concerns.
+
+#### Validation
+- M1 is merged and CI-validated.
+- M2 transaction logic is covered by unit tests.
+- PR CI is the authoritative clean-environment compile/test validation for the block, block entity, capability, and persistence APIs.
+
+#### Limitations
+- No menu or GUI exists yet; extraction is exposed as a server-side block-entity operation for M3 to call.
+- No crafting recipe or custom textures are included yet.
+- The machine currently requires an empty output slot before extraction.
+- Hopper/automation side rules are intentionally unrestricted at the capability layer for now and can be hardened later if needed.
+
+#### Next
+Implement M3: menu, enchantment selection UI, and validated server-side extract action.
+
 ### M1 — 2026-09-27
 
 #### Changed
