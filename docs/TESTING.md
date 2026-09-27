@@ -88,6 +88,33 @@ Compatibility tests verify:
 - automation can extract completed output;
 - simulated insertion does not mutate inventory.
 
+## M6 automated coverage
+
+M6 tests verify:
+
+- repeated single extractions fill separate output-buffer slots;
+- one ordinary book is consumed per successful extraction;
+- a completely full six-slot output buffer rejects extraction atomically;
+- output slots reject insertion;
+- automation may extract from any buffered output slot;
+- automation input/source restrictions remain intact.
+
+The exact registry-ID network selection path is additionally covered by live client/server testing because real enchantment registry holders are required.
+
+## M6 runtime checks
+
+1. Put Sharpness and Mending on the same item.
+2. Select Sharpness regardless of its visual row and confirm **only Sharpness** is extracted.
+3. Repeat with Mending and with modded enchantments.
+4. Extract several enchantments consecutively without removing earlier output books.
+5. Verify each result occupies the next free output slot.
+6. Fill all six outputs and verify another extraction consumes neither source state nor a book.
+7. Use **Extract All** with enough books and capacity; verify one separate enchanted book per enchantment.
+8. Repeat Extract All with fewer books than enchantments and confirm it stops cleanly.
+9. Confirm all six outputs persist across save/reload.
+10. Verify hopper/pipe extraction works from every buffered output.
+11. Repeat the two-player stale-selection/concurrency checks.
+
 ## Pre-v1 release gate
 
 Execute every check in [PRE_RELEASE_TEST_PLAN.md](PRE_RELEASE_TEST_PLAN.md) against the actual NeoForge 1.21.1 client/server pack before tagging v1.0.0.
