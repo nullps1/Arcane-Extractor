@@ -200,7 +200,7 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
                     font,
                     Component.translatable("screen.arcane_extraction.page", page, pages),
                     104,
-                    140,
+                    58,
                     0xFFAFA2BC,
                     false);
         }
