@@ -6,6 +6,7 @@ import dev.nullps1.arcaneextraction.registry.ModBlocks;
 import dev.nullps1.arcaneextraction.registry.ModCapabilities;
 import dev.nullps1.arcaneextraction.registry.ModItems;
 import dev.nullps1.arcaneextraction.registry.ModMenus;
+import dev.nullps1.arcaneextraction.network.ModNetworking;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -23,6 +24,7 @@ public final class ArcaneExtraction {
         ModBlockEntities.register(modEventBus);
         ModMenus.register(modEventBus);
         modEventBus.addListener(ModCapabilities::register);
+        modEventBus.addListener(ModNetworking::register);
         modEventBus.addListener(this::addCreativeTabContents);
 
         LOGGER.info("Arcane Extraction initializing");
