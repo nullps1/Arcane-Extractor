@@ -2,7 +2,6 @@ package dev.nullps1.arcaneextraction.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.nullps1.arcaneextraction.blockentity.ArcaneExtractorBlockEntity;
-import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -22,7 +21,6 @@ public final class ArcaneExtractorBlock extends BaseEntityBlock {
         return CODEC;
     }
 
-    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ArcaneExtractorBlockEntity(pos, state);
