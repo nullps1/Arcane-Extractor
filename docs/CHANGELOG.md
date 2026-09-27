@@ -2,6 +2,41 @@
 
 ## Unreleased
 
+### M4 — 2026-09-27
+
+#### Changed
+- Added a shaped survival recipe for the Arcane Extractor using four crying obsidian, four amethyst shards, and one enchanting table.
+- Added recipe-book unlock advancement data.
+- Added block loot so a correctly harvested Arcane Extractor drops itself.
+- Added pickaxe and diamond-tool block tags.
+- Added inventory drop behavior when the machine is broken so stored items are not silently deleted.
+- Added the Arcane Extractor to the Functional Blocks creative tab for testing.
+- Replaced the single-texture placeholder model with a distinct vanilla-texture composition: crying-obsidian sides, obsidian bottom, and amethyst top.
+- Added server-side enchanting-table sound and enchant particles after a successful extraction.
+
+#### Why
+M4 makes the machine viable in a survival world without prematurely adding a speculative XP or custom-currency tax. The crafting recipe establishes the primary up-front cost; each extraction still consumes one ordinary book.
+
+#### Validation
+- M3 is merged and CI-validated.
+- Recipe format follows the Minecraft 1.21.1 shaped-recipe schema.
+- Loot data uses the 1.21 singular `loot_table` path.
+- PR CI is the authoritative clean-environment compile/test validation for the M4 code changes.
+
+#### Balancing
+- Machine cost: 4 crying obsidian + 4 amethyst shards + 1 enchanting table.
+- Per-extraction cost: 1 ordinary book.
+- No XP cost in the initial balancing pass.
+- Diamond-tier pickaxe requirement protects the machine from trivial early-game harvesting.
+
+#### Limitations
+- Visuals use composed vanilla textures; original custom pixel art is deferred to a later polish pass.
+- Extraction feedback is intentionally simple and uses vanilla sound/particles.
+- Detailed client-facing error messages are still not shown for rejected extraction attempts.
+
+#### Next
+Implement M5 compatibility hardening: curses, treasure/modded enchantments, nonstandard levels, dedicated-server verification, and automation edge cases.
+
 ### M3 — 2026-09-27
 
 #### Changed
