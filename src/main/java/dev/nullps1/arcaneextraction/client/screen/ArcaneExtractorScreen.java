@@ -45,6 +45,7 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
         super(menu, inventory, title);
         imageWidth = 204;
         imageHeight = 233;
+        inventoryLabelX = 20;
         inventoryLabelY = 139;
     }
 
@@ -58,7 +59,7 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
                 Component.translatable("screen.arcane_extraction.extract_all"), button -> requestExtractAll(), false));
         previousButton = addRenderableWidget(new ArcaneButton(leftPos + 127, topPos + 117, 32,
                 Component.literal("<"), button -> changePage(-ROWS_PER_PAGE), false));
-        nextButton = addRenderableWidget(new ArcaneButton(leftPos + 166, topPos + 117, 30,
+        nextButton = addRenderableWidget(new ArcaneButton(leftPos + 164, topPos + 117, 32,
                 Component.literal(">"), button -> changePage(ROWS_PER_PAGE), false));
 
         refreshControls();
