@@ -60,8 +60,8 @@ public final class ArcaneExtractorMenu extends AbstractContainerMenu {
         this.machineInventory = machineInventory;
         this.access = access;
 
-        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.SOURCE_SLOT, 20, 35));
-        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.BOOK_SLOT, 56, 35));
+        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.SOURCE_SLOT, 28, 35));
+        addSlot(new SlotItemHandler(machineInventory, ArcaneExtractorInventory.BOOK_SLOT, 72, 35));
 
         for (int index = 0; index < ArcaneExtractorInventory.OUTPUT_COUNT; index++) {
             int column = index % 3;
@@ -70,7 +70,7 @@ public final class ArcaneExtractorMenu extends AbstractContainerMenu {
             addSlot(new SlotItemHandler(
                     machineInventory,
                     slotIndex,
-                    116 + column * 18,
+                    136 + column * 18,
                     26 + row * 18) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
@@ -84,13 +84,13 @@ public final class ArcaneExtractorMenu extends AbstractContainerMenu {
                 addSlot(new Slot(
                         playerInventory,
                         column + row * 9 + 9,
-                        8 + column * 18,
+                        21 + column * 18,
                         151 + row * 18));
             }
         }
 
         for (int column = 0; column < 9; column++) {
-            addSlot(new Slot(playerInventory, column, 8 + column * 18, 209));
+            addSlot(new Slot(playerInventory, column, 21 + column * 18, 209));
         }
     }
 
