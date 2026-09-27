@@ -4,7 +4,11 @@ import dev.nullps1.arcaneextraction.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,12 +33,37 @@ public final class ArcaneExtractorBlockEntity extends BlockEntity {
     }
 
     public ArcaneExtractorTransaction.Result extract(Holder<Enchantment> selected) {
-        if (level == null || level.isClientSide()) {
+        if (!(level instanceof ServerLevel serverLevel)) {
             return new ArcaneExtractorTransaction.Failure(
                     ArcaneExtractorTransaction.FailureReason.EXTRACTION_REJECTED,
                     null);
         }
-        return ArcaneExtractorTransaction.extract(inventory, selected);
+
+        ArcaneExtractorTransaction.Result result =
+                ArcaneExtractorTransaction.extract(inventory, selected);
+
+        if (result instanceof ArcaneExtractorTransaction.Success) {
+            serverLevel.playSound(
+                    null,
+                    worldPosition,
+                    SoundEvents.ENCHANTMENT_TABLE_USE,
+                    SoundSource.BLOCKS,
+                    0.8F,
+                    1.15F);
+
+            serverLevel.sendParticles(
+                    ParticleTypes.ENCHANT,
+                    worldPosition.getX() + 0.5D,
+                    worldPosition.getY() + 1.0D,
+                    worldPosition.getZ() + 0.5D,
+                    18,
+                    0.35D,
+                    0.25D,
+                    0.35D,
+                    0.05D);
+        }
+
+        return result;
     }
 
     @Override
