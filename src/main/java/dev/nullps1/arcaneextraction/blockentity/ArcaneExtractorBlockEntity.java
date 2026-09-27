@@ -19,6 +19,8 @@ public final class ArcaneExtractorBlockEntity extends BlockEntity {
 
     private final ArcaneExtractorInventory inventory =
             new ArcaneExtractorInventory(this::setChanged);
+    private final ArcaneExtractorAutomationHandler automationInventory =
+            new ArcaneExtractorAutomationHandler(inventory);
 
     public ArcaneExtractorBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ARCANE_EXTRACTOR.get(), pos, state);
@@ -26,6 +28,10 @@ public final class ArcaneExtractorBlockEntity extends BlockEntity {
 
     public IItemHandler inventory() {
         return inventory;
+    }
+
+    public IItemHandler automationInventory() {
+        return automationInventory;
     }
 
     public ArcaneExtractorInventory machineInventory() {
