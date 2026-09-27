@@ -28,8 +28,8 @@ The repository does not embed the binary Gradle wrapper JAR. Bootstrap it once f
 ### Linux/macOS
 
 ```bash
-./bootstrap-wrapper.sh
-./gradlew build
+sh ./bootstrap-wrapper.sh
+sh ./gradlew build
 ```
 
 The built mod JAR will be written under `build/libs/`.
