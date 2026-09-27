@@ -162,6 +162,27 @@ Exit criteria:
 
 See [M7_VISUALS.md](M7_VISUALS.md) for evidence and explicit remaining checks.
 
+## M7.1 — Medieval Magic Retheme
+
+Status: **implemented; PR CI and owner visual acceptance pending**.
+
+Scope:
+- Grindstone-inspired open workstation silhouette.
+- Crying obsidian support legs/feet.
+- Dark oak structural frame and work shelf.
+- Amethyst crystal extraction core with blackstone hardware.
+- Carved wood + parchment + amethyst GUI theme.
+- Medieval arcane button styling.
+- Preserve every M6 gameplay/network/inventory contract.
+
+Exit criteria:
+- `./gradlew build` succeeds.
+- Model and outline/collision geometry agree for all four facings.
+- No missing vanilla texture references or purple/black missing-texture faces appear.
+- GUI slots, labels, list selection, paging, Extract, and Extract All remain aligned and functional.
+- M6 live behavior remains unchanged.
+- Owner accepts the medieval-magic visual direction in the intended modpack.
+
 ## v1.0.0
 
 Exit criteria:
