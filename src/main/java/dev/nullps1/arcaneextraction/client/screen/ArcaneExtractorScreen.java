@@ -13,11 +13,15 @@ import net.minecraft.world.item.enchantment.Enchantment;
 public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneExtractorMenu> {
     private static final int LIST_X = 8;
     private static final int LIST_Y = 58;
+    private static final int LIST_WIDTH = 90;
     private static final int ROW_HEIGHT = 12;
-    private static final int MAX_VISIBLE_ROWS = 3;
+    private static final int ROWS_PER_PAGE = 4;
 
     private int selectedIndex = -1;
+    private int pageStart = 0;
     private Button extractButton;
+    private Button previousButton;
+    private Button nextButton;
 
     public ArcaneExtractorScreen(
             ArcaneExtractorMenu menu,
@@ -25,19 +29,33 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
             Component title) {
         super(menu, inventory, title);
         imageWidth = 176;
-        imageHeight = 186;
-        inventoryLabelY = 92;
+        imageHeight = 210;
+        inventoryLabelY = 116;
     }
 
     @Override
     protected void init() {
         super.init();
+
         extractButton = addRenderableWidget(Button.builder(
                         Component.translatable("screen.arcane_extraction.extract"),
                         button -> requestExtraction())
                 .bounds(leftPos + 103, topPos + 58, 65, 20)
                 .build());
-        refreshButtonState();
+
+        previousButton = addRenderableWidget(Button.builder(
+                        Component.literal("<"),
+                        button -> changePage(-ROWS_PER_PAGE))
+                .bounds(leftPos + 103, topPos + 82, 30, 20)
+                .build());
+
+        nextButton = addRenderableWidget(Button.builder(
+                        Component.literal(">"),
+                        button -> changePage(ROWS_PER_PAGE))
+                .bounds(leftPos + 138, topPos + 82, 30, 20)
+                .build());
+
+        refreshControls();
     }
 
     private void requestExtraction() {
@@ -49,23 +67,51 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
 
         minecraft.gameMode.handleInventoryButtonClick(menu.containerId, selectedIndex);
         selectedIndex = -1;
-        refreshButtonState();
+        refreshControls();
     }
 
-    private void refreshButtonState() {
+    private void changePage(int delta) {
+        int size = menu.candidates().size();
+        pageStart = Math.max(0, Math.min(pageStart + delta, lastPageStart(size)));
+        refreshControls();
+    }
+
+    private int lastPageStart(int size) {
+        if (size <= ROWS_PER_PAGE) {
+            return 0;
+        }
+        return ((size - 1) / ROWS_PER_PAGE) * ROWS_PER_PAGE;
+    }
+
+    private void refreshControls() {
+        List<ExtractionCandidate> candidates = menu.candidates();
+        int size = candidates.size();
+
+        if (selectedIndex >= size) {
+            selectedIndex = -1;
+        }
+        if (pageStart >= size && size > 0) {
+            pageStart = lastPageStart(size);
+        }
+        if (size == 0) {
+            pageStart = 0;
+        }
+
         if (extractButton != null) {
-            int size = menu.candidates().size();
-            if (selectedIndex >= size) {
-                selectedIndex = -1;
-            }
             extractButton.active = selectedIndex >= 0 && selectedIndex < size;
+        }
+        if (previousButton != null) {
+            previousButton.active = pageStart > 0;
+        }
+        if (nextButton != null) {
+            nextButton.active = pageStart + ROWS_PER_PAGE < size;
         }
     }
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         graphics.fill(leftPos, topPos, leftPos + imageWidth, topPos + imageHeight, 0xFF1C1724);
-        graphics.fill(leftPos + 7, topPos + 17, leftPos + 169, topPos + 84, 0xFF2C2238);
+        graphics.fill(leftPos + 7, topPos + 17, leftPos + 169, topPos + 108, 0xFF2C2238);
 
         drawSlot(graphics, 25, 34);
         drawSlot(graphics, 61, 34);
@@ -86,13 +132,17 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
         graphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0xFFD0C7DA, false);
 
         List<ExtractionCandidate> candidates = menu.candidates();
-        int visible = Math.min(candidates.size(), MAX_VISIBLE_ROWS);
-        for (int i = 0; i < visible; i++) {
-            int y = LIST_Y + i * ROW_HEIGHT;
-            if (i == selectedIndex) {
-                graphics.fill(LIST_X - 2, y - 1, 96, y + 10, 0xFF604879);
+        int end = Math.min(candidates.size(), pageStart + ROWS_PER_PAGE);
+
+        for (int index = pageStart; index < end; index++) {
+            int row = index - pageStart;
+            int y = LIST_Y + row * ROW_HEIGHT;
+
+            if (index == selectedIndex) {
+                graphics.fill(LIST_X - 2, y - 1, LIST_X + LIST_WIDTH, y + 10, 0xFF604879);
             }
-            ExtractionCandidate candidate = candidates.get(i);
+
+            ExtractionCandidate candidate = candidates.get(index);
             Component name = Enchantment.getFullname(candidate.enchantment(), candidate.level());
             graphics.drawString(font, name, LIST_X, y, 0xFFE9E0F2, false);
         }
@@ -107,7 +157,19 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
                     false);
         }
 
-        refreshButtonState();
+        if (candidates.size() > ROWS_PER_PAGE) {
+            int page = pageStart / ROWS_PER_PAGE + 1;
+            int pages = (candidates.size() + ROWS_PER_PAGE - 1) / ROWS_PER_PAGE;
+            graphics.drawString(
+                    font,
+                    Component.translatable("screen.arcane_extraction.page", page, pages),
+                    104,
+                    105,
+                    0xFFAFA2BC,
+                    false);
+        }
+
+        refreshControls();
     }
 
     @Override
@@ -116,13 +178,14 @@ public final class ArcaneExtractorScreen extends AbstractContainerScreen<ArcaneE
         int relativeY = (int) mouseY - topPos;
         List<ExtractionCandidate> candidates = menu.candidates();
 
-        if (relativeX >= LIST_X && relativeX < 98
+        if (relativeX >= LIST_X && relativeX < LIST_X + LIST_WIDTH
                 && relativeY >= LIST_Y
-                && relativeY < LIST_Y + MAX_VISIBLE_ROWS * ROW_HEIGHT) {
-            int index = (relativeY - LIST_Y) / ROW_HEIGHT;
+                && relativeY < LIST_Y + ROWS_PER_PAGE * ROW_HEIGHT) {
+            int row = (relativeY - LIST_Y) / ROW_HEIGHT;
+            int index = pageStart + row;
             if (index < candidates.size()) {
                 selectedIndex = index;
-                refreshButtonState();
+                refreshControls();
                 return true;
             }
         }
