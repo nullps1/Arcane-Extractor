@@ -2,6 +2,7 @@ package dev.nullps1.arcaneextraction.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.nullps1.arcaneextraction.blockentity.ArcaneExtractorBlockEntity;
+import dev.nullps1.arcaneextraction.blockentity.ArcaneExtractorInventory;
 import dev.nullps1.arcaneextraction.menu.ArcaneExtractorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -53,6 +54,28 @@ public final class ArcaneExtractorBlock extends BaseEntityBlock {
                 (containerId, playerInventory, player) ->
                         new ArcaneExtractorMenu(containerId, playerInventory, extractor),
                 TITLE);
+    }
+
+    @Override
+    protected void onRemove(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            BlockState newState,
+            boolean movedByPiston) {
+        if (!state.is(newState.getBlock())) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ArcaneExtractorBlockEntity extractor) {
+                for (int slot = 0; slot < ArcaneExtractorInventory.SLOT_COUNT; slot++) {
+                    var stack = extractor.machineInventory().getStackInSlot(slot);
+                    if (!stack.isEmpty()) {
+                        popResource(level, pos, stack.copy());
+                    }
+                }
+            }
+        }
+
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override
