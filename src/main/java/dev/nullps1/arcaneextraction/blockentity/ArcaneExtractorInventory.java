@@ -1,6 +1,10 @@
 package dev.nullps1.arcaneextraction.blockentity;
 
 import dev.nullps1.arcaneextraction.extraction.EnchantmentExtractor;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -52,6 +56,23 @@ public class ArcaneExtractorInventory extends ItemStackHandler {
             return stack.is(Items.BOOK);
         }
         return false;
+    }
+
+    @Override
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+        super.deserializeNBT(provider, nbt);
+
+        if (getSlots() != SLOT_COUNT) {
+            List<ItemStack> preserved = new ArrayList<>();
+            for (int slot = 0; slot < Math.min(getSlots(), SLOT_COUNT); slot++) {
+                preserved.add(getStackInSlot(slot).copy());
+            }
+
+            setSize(SLOT_COUNT);
+            for (int slot = 0; slot < preserved.size(); slot++) {
+                setStackInSlot(slot, preserved.get(slot));
+            }
+        }
     }
 
     @Override
