@@ -143,7 +143,7 @@ Exit criteria:
 
 ## M7 — Visual release
 
-Status: **implemented; final owner visual/modpack acceptance pending**.
+Status: **complete; superseded visually by M7.1/M7.2**.
 
 Scope:
 - Original obsidian/amethyst workstation model and five 16x16 material textures.
@@ -164,7 +164,7 @@ See [M7_VISUALS.md](M7_VISUALS.md) for evidence and explicit remaining checks.
 
 ## M7.1 — Medieval Magic Retheme
 
-Status: **implemented; PR CI and owner visual acceptance pending**.
+Status: **complete; owner accepted the medieval-magic retheme on 2026-09-27**.
 
 Scope:
 - Grindstone-inspired open workstation silhouette.
@@ -185,7 +185,7 @@ Exit criteria:
 
 ## M7.2 — Visual polish
 
-Status: **implemented; PR CI and owner visual acceptance pending**.
+Status: **complete; owner accepted the widened GUI and final workstation silhouette on 2026-09-27**.
 
 Scope:
 - Widen GUI to 204 pixels for more breathing room.
@@ -206,8 +206,14 @@ Exit criteria:
 
 ## v1.0.0
 
+Status: **release ready — 2026-09-27**.
+
 Exit criteria:
-- Stable extraction behavior.
-- Multiplayer-safe.
-- No hardcoded enchantment allowlist required for ordinary compatibility.
-- User-facing configuration and compatibility behavior documented.
+- Stable extraction behavior. **Met.**
+- Multiplayer-safe. **Met in live testing.**
+- No hardcoded enchantment allowlist required for ordinary compatibility. **Met.**
+- User-facing configuration and compatibility behavior documented. **Met.**
+- Final medieval visual direction accepted. **Met.**
+- Release version pinned to `1.0.0`. **Met.**
+
+Release note: the owner reported the final local visual/gameplay pass successful on 2026-09-27. The configured release target is Minecraft 1.21.1 / NeoForge 21.1.252 / Java 21. The exact modpack revision/hash was not recorded in-repo and should be captured when the final JAR is deployed.
