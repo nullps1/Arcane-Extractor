@@ -1,5 +1,26 @@
 # Changelog
 
+## v1.0.0 — 2026-09-27
+
+### Release
+- First stable Arcane Extraction release for Minecraft 1.21.1 / NeoForge 21.1.252.
+- Server-authoritative extraction by exact enchantment registry ID.
+- One-book-per-enchantment extraction with exact level preservation.
+- Six-slot enchanted-book output buffer and Extract All.
+- Generic support for normal vanilla/modded/data-driven enchantments stored in Minecraft's standard enchantment component.
+- Successful extraction clears the source item's existing anvil prior-work penalty while preserving unrelated item state.
+- Automation can insert valid source/books and pull completed outputs without stealing machine inputs.
+- Persistent block entity inventory, legacy three-slot migration, survival recipe, loot, creative-tab entry, sounds, and particles.
+- Multiplayer, dedicated-server, persistence, automation, curse/treasure/modded enchantments, stale selection, and output-buffer behavior were exercised during pre-release testing.
+- Final visuals use the owner-approved medieval magical workstation direction: crying obsidian supports, dark oak frame, blackstone hardware, amethyst core, and a widened carved-wood/parchment GUI.
+
+### Release acceptance
+- M6 gameplay checklist: passed by owner on 2026-09-27.
+- M7.2 final visual pass: passed by owner on 2026-09-27.
+- Release version: `1.0.0`.
+- Target: Minecraft 1.21.1, NeoForge 21.1.252, Java 21.
+- Exact final modpack revision/hash was not recorded in the repository; record it alongside the deployed release artifact.
+
 ## Unreleased
 
 ### M7.2 — Visual polish — 2026-09-27
