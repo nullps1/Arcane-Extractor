@@ -4,9 +4,9 @@ A NeoForge 1.21.1 mod focused on one mechanic: moving a selected enchantment fro
 
 ## Current status
 
-**M7 — visual release candidate.** The Arcane Extractor is an obsidian/amethyst workstation with a textured GUI, exact enchantment selection, six output slots, and Extract All. M6 live testing was reported passed by the project owner on 2026-09-27; M7 adds visuals while retaining that extraction contract.
+**v1.0.0 release candidate accepted for release.** Arcane Extraction now includes the medieval-magic Arcane Extractor workstation, exact registry-ID enchantment selection, a six-slot output buffer, Extract All, automation support, persistence, and multiplayer-safe server-authoritative extraction.
 
-See [M7 visuals and validation](docs/M7_VISUALS.md) for the asset specification and remaining release checks. This is still a snapshot; no v1 tag or publication is implied.
+The project owner completed live gameplay and final visual acceptance on 2026-09-27. See [M7 visuals and validation](docs/M7_VISUALS.md) and [the pre-release test plan](docs/PRE_RELEASE_TEST_PLAN.md) for the validation trail.
 
 ## Toolchain
 
@@ -34,7 +34,7 @@ sh ./bootstrap-wrapper.sh
 sh ./gradlew build
 ```
 
-The built mod JAR will be written under `build/libs/`.
+The built mod JAR will be written under `build/libs/` as the `1.0.0` release artifact.
 
 ## Design rule
 
