@@ -158,7 +158,7 @@ class EnchantmentExtractorTest {
                 EnchantmentExtractor.extract(source, modded));
 
         assertEquals(Component.literal("Component Soup"), success.source().get(DataComponents.CUSTOM_NAME));
-        assertEquals(0, success.source().getOrDefault(DataComponents.REPAIR_COST, 0));
+        assertEquals(0, success.source().get(DataComponents.REPAIR_COST));
         assertEquals(77, success.source().getOrDefault(DataComponents.DAMAGE, 0));
         assertEquals(19, source.getOrDefault(DataComponents.REPAIR_COST, 0));
     }

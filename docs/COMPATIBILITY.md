@@ -17,7 +17,7 @@ If an enchantment exists in the source item's ordinary enchantment component, Ar
 
 For single extraction, the client sends the selected enchantment's registry ID rather than a GUI row index. The server resolves that exact ID against the current source item before extraction. Candidate ordering is therefore presentation-only and cannot change which enchantment is removed.
 
-A successful extraction intentionally clears the source item's anvil prior-work penalty (`DataComponents.REPAIR_COST`). This prevents repeated extract/re-enchant cycles from inheriting an ever-growing anvil cost. Failed extraction attempts do not alter the repair cost.
+A successful extraction intentionally resets the source item's anvil prior-work penalty (`DataComponents.REPAIR_COST`) to `0`. It sets the value rather than removing the component, because other mods (such as Quark) expect `get(REPAIR_COST)` to be non-null. This prevents repeated extract/re-enchant cycles from inheriting an ever-growing anvil cost. Failed extraction attempts do not alter the repair cost.
 
 ## Automated M5 coverage
 

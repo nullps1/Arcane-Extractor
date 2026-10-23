@@ -69,7 +69,9 @@ public final class EnchantmentExtractor {
         ItemEnchantments.Mutable remaining = new ItemEnchantments.Mutable(enchantments);
         remaining.removeIf(selected::equals);
         cleanedSource.set(DataComponents.ENCHANTMENTS, remaining.toImmutable());
-        cleanedSource.remove(DataComponents.REPAIR_COST);
+        // Reset to 0 rather than remove(): REPAIR_COST is a default component, so remove()
+        // writes a removal patch and get() then returns null, which crashes mods like Quark.
+        cleanedSource.set(DataComponents.REPAIR_COST, 0);
 
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
         ItemEnchantments.Mutable stored = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);

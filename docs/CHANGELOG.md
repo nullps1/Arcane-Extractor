@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.1 — 2026-10-22
+
+### Fixed
+- Extraction now resets `DataComponents.REPAIR_COST` to `0` instead of removing it. Removing a default component left a `!minecraft:repair_cost` patch that made `get()` return null, crashing Quark's Ancient Tomes anvil handler when an overleveled book was applied to an extracted item.
+- Items extracted with v1.0.0 keep that patch; repair them with `/item modify entity <player> weapon.mainhand {function:"minecraft:set_components",components:{"minecraft:repair_cost":0}}`.
+
 ## v1.0.0 — 2026-09-27
 
 ### Release
