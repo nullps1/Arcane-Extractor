@@ -2,18 +2,18 @@
 
 ## Build
 
+The Gradle wrapper JAR is committed, so no bootstrap step is needed. Use JDK 21.
+
 ### Windows
 
 ```powershell
-.\bootstrap-wrapper.ps1
 .\gradlew.bat build
 ```
 
 ### Linux/macOS
 
 ```bash
-sh ./bootstrap-wrapper.sh
-sh ./gradlew build
+./gradlew build
 ```
 
 ## M1 automated coverage

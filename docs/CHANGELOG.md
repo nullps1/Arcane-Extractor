@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased — repository and documentation (no mod changes)
+
+The mod itself is unchanged: the built JAR is still `arcane_extraction-1.0.1.jar`.
+
+### Changed
+- Rewrote the README for v1.0.1: requirements, installation, features, crafting, known limitations and build instructions.
+- Replaced the Gradle wrapper JAR with the official Gradle 9.2.1 one (SHA-256 `423cb469…e8d9`, as published at gradle.org/release-checksums). The previously committed JAR was a genuine wrapper JAR from a different Gradle release.
+- Pinned the Gradle distribution with `distributionSha256Sum` (`72f44c9f…5bc3f`, the official 9.2.1 `-bin` checksum).
+- Pinned GitHub Actions to full commit SHAs (`actions/checkout` v4.4.0, `actions/setup-java` v4.9.1).
+- Added `SECURITY.md`.
+
+### Removed
+- `bootstrap-wrapper.sh`, `bootstrap-wrapper.ps1` and the CI fallback that called them. They downloaded an unpinned wrapper JAR from a third-party repository and were unused because the JAR is committed.
+
 ## v1.0.1 — 2026-10-22
 
 ### Fixed
@@ -27,7 +41,9 @@
 - Target: Minecraft 1.21.1, NeoForge 21.1.252, Java 21.
 - Exact final modpack revision/hash was not recorded in the repository; record it alongside the deployed release artifact.
 
-## Unreleased
+## Pre-release milestones (all shipped in v1.0.0)
+
+The sections below are the development log for M0–M7.2. They were released together as v1.0.0.
 
 ### M7.2 — Visual polish — 2026-09-27
 
@@ -294,7 +310,7 @@ A boring, reproducible bootstrap keeps future gameplay work isolated from build-
 - Full Gradle dependency resolution/build remains pending CI or another networked Gradle environment.
 
 #### Limitations
-- The repository omits the binary `gradle-wrapper.jar`; bootstrap scripts retrieve the official wrapper JAR from the NeoForge 1.21.1 MDK before the first build.
+- The repository initially omitted the binary `gradle-wrapper.jar` and used bootstrap scripts; the JAR is now committed and the scripts were removed (see the top of this changelog).
 - No gameplay mechanic exists in M0.
 
 #### Next
